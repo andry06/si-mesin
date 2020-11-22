@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateMerkMesinTable extends Migration
+class CreateKontrakMesinTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,12 @@ class CreateMerkMesinTable extends Migration
      */
     public function up()
     {
-        Schema::create('merk_mesin', function (Blueprint $table) {
+        Schema::create('kontrak_mesin', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('merk_mesin', 50);
+            $table->string('no_kontrak', 50)->nullable();
+            $table->date('tgl_jatuh_tempo')->nullable();
+            $table->string('keterangan', 50)->nullable();
+            $table->string('status',50)->nullable();
             $table->timestamps();
         });
     }
@@ -27,6 +30,6 @@ class CreateMerkMesinTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('merk_mesin');
+        Schema::dropIfExists('kontrak_mesin');
     }
 }
