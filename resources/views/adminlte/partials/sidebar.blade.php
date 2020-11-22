@@ -64,7 +64,7 @@
             </ul>
           </li>
           <li class="nav-item">
-            <a href="{{ asset('/adminlte/widgets.html') }}" class="nav-link">
+            <a href="../widgets.html" class="nav-link">
               <i class="nav-icon fas fa-th"></i>
               <p>
                 Widgets
@@ -72,8 +72,8 @@
               </p>
             </a>
           </li>
-          <li class="nav-item">
-            <a href="#" class="nav-link">
+          <li class="nav-item menu-open">
+            <a href="#" class="nav-link active">
               <i class="nav-icon fas fa-copy"></i>
               <p>
                 Layout Options
@@ -119,7 +119,7 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a href="../layout/fixed-footer.html" class="nav-link">
+                <a href="../layout/fixed-footer.html" class="nav-link active">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Fixed Footer</p>
                 </a>
@@ -410,8 +410,8 @@
               </li>
             </ul>
           </li>
-          <li class="nav-item menu-open">
-            <a href="#" class="nav-link active">
+          <li class="nav-item">
+            <a href="#" class="nav-link">
               <i class="nav-icon far fa-plus-square"></i>
               <p>
                 Extras
@@ -526,7 +526,7 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a href="../examples/blank.html" class="nav-link active">
+                <a href="../examples/blank.html" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Blank Page</p>
                 </a>
