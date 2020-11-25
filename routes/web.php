@@ -11,28 +11,36 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('welcome');
+// });
 
-Route::get('/master', function(){
-    return view('adminlte.master');
-});
+// Route::get('/master', function(){
+//     return view('adminlte.master');
+// });
 
-Route::get('/master', function(){
-    return view('adminlte.master');
-});
+// Route::get('/master', function(){
+//     return view('adminlte.master');
+// });
 
 
-Route::get('/master', function(){
-    return view('adminlte.master');
-});
+// Route::get('/master', function(){
+//     return view('adminlte.master');
+// });
 
-Route::get('/items', function(){
-    return view('items.index');
-});
+// Route::get('/items', function(){
+//     return view('items.index');
+// });
 
-Route::get('/items/create', function(){
-    return view('items.create');
-});
+// Route::get('/items/create', function(){
+//     return view('items.create');
+// });
 
+
+Route::get('/perusahaan/create', 'PerusahaanController@create');
+Route::post('/perusahaan', 'PerusahaanController@store');
+Route::get('/perusahaan', 'PerusahaanController@index');
+Route::get('/perusahaan/{id}', 'PerusahaanController@show');
+Route::get('/perusahaan/{id}/edit', 'PerusahaanController@edit');
+Route::put('/perusahaan/{id}', 'PerusahaanController@update');
+Route::delete('/perusahaan/{id}', 'PerusahaanController@destroy');

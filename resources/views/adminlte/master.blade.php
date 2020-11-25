@@ -16,11 +16,11 @@
 <!-- Site wrapper -->
 <div class="wrapper">
   <!-- Navbar -->
- @include('adminlte.partials.navbar')
+ @include('adminlte.layouts.navbar')
   <!-- /.navbar -->
 
   <!-- Main Sidebar Container -->
-  @include('adminlte.partials.sidebar ')
+  @include('adminlte.layouts.sidebar ')
 
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
