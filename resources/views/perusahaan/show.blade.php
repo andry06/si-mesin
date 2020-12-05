@@ -31,6 +31,7 @@
                     Alamat : {{ $perusahaan->alamat }} <br>
                     Email : {{ $perusahaan->email }}<br>
                     No_telp : {{ $perusahaan->no_telp }}<br>
+                    Dibuat Oleh : {{ $perusahaan->author->name }}
               </div>
             </div>
 @endsection
