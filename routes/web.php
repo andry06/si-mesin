@@ -48,7 +48,12 @@ Route::get('/', function () {
 // Route::resource('perusahaan', 'PerusahaanController')->middleware('auth');
 
 Route::resource('perusahaan', 'PerusahaanController');
+Route::resource('jenismesin', 'JenisMesinController');
 Auth::routes();
+
+Route::get('/index', function(){
+    return view('index');
+});
 
 Route::get('/home', 'HomeController@index')->name('home');
 

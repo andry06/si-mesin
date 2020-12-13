@@ -3,6 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use DB;
+use App\JenisMesin;
+use Auth;
+
 
 class JenisMesinController extends Controller
 {
@@ -11,9 +15,22 @@ class JenisMesinController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+    public function __construct(){
+        //untuk pengecualian pakai except
+        // $this->middleware('auth')->except('index');
+
+        //untuk yg disetujui di berlakukan autentifikasi
+        // $this->middleware('auth')->only('delete');
+
+        $this->middleware('auth');
+    }
+
     public function index()
     {
-        //
+        $user = Auth::user();
+        $jenismesin = JenisMesin::all()->sortBy('jenis_mesin');
+        return view('jenismesin.index', compact('jenismesin'));
     }
 
     /**
@@ -23,7 +40,8 @@ class JenisMesinController extends Controller
      */
     public function create()
     {
-        //
+        // / Dengan Query Builder    
+        
     }
 
     /**
@@ -34,7 +52,17 @@ class JenisMesinController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'jenis_mesin' => 'required|max:45|unique:jenis_mesin'
+        ]);
+
+        $query = DB::table('jenis_mesin')->insert([
+            'jenis_mesin' => ucwords($request['jenis_mesin']), 
+        ]);
+
+    
+        return redirect('/jenismesin')->with('success', 'Post Berhasil Disimpan !');
+
     }
 
     /**

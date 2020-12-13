@@ -31,10 +31,10 @@
                 @csrf
                 <div class="card-body">
                   <div class="form-group row">
-                    <label for="nama_perusahaan" class="col-sm-2 col-form-label">Nama Perusahaan</label>
+                    <label for="nama_perusahaan" class="col-sm-2 col-form-label">Jenis Mesin</label>
                     <div class="col-sm-10">
-                      <input type="text" name="nama_perusahaan" value=" {{ old('nama_perusahaan', '')}} " class="form-control" id="nama_perusahaan" placeholder="Nama Perusahaan">
-                         @error('nama')
+                      <input type="text" name="nama_perusahaan" value=" {{ old('jenis_mesin', '')}} " class="form-control" id="nama_perusahaan" placeholder="Nama Perusahaan">
+                         @error('jenis_mesin')
                             <div class="alert alert-danger">{{ $message }}</div>
                         @enderror
                     </div>

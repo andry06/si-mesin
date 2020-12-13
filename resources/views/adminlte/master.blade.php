@@ -11,6 +11,7 @@
   <link rel="stylesheet" href=" {{ asset('/adminlte/plugins/fontawesome-free/css/all.min.css') }}">
   <!-- Theme style -->
   <link rel="stylesheet" href="{{ asset('/adminlte/dist/css/adminlte.min.css') }}">
+  @stack('csstambahan')
 </head>
 <body class="hold-transition sidebar-mini layout-footer-fixed">
 <!-- Site wrapper -->
@@ -63,6 +64,8 @@
 <script src="{{ asset('/adminlte/dist/js/demo.js') }}"></script>
 
 @stack('scripts')
+
+
 
 </body>
 </html>
