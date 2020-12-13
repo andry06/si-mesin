@@ -55,7 +55,7 @@
                   <?php 
                     $no = 0
                     ?>
-                    @forelse($jenismesin as $key => $jm)
+                    @forelse($jenismesin1 as $key => $jm)
                         <tr>
                             <td> {{  $no+=1 }}</td>
                             <td class="text-center" > {{ strtoupper($jm->jenis_mesin) }}</td>
@@ -95,12 +95,13 @@
             </div>
             <!-- /.card-header -->
             <!-- form start -->
-            <form role="form"  action="/jenismesin" method="POST">
+            <form role="form"  action="/jenismesin/{{ $jenismesin->id }}" method="POST">
             @csrf
+            @method('PUT')
             <div class="card-body">
                 <div class="form-group">
                     <label for="jenis_mesin">Jenis Mesin</label>
-                    <input name="jenis_mesin" class="form-control" id="jenis_mesin" value=" {{ old('jenis_mesin', '')}}"  placeholder="Masukkan Jenis Mesin">
+                    <input name="jenis_mesin" class="form-control" id="jenis_mesin" value=" {{ old('jenis_mesin', $jenismesin->jenis_mesin)}}"  placeholder="Masukkan Jenis Mesin">
                 </div>
                 @error('jenis_mesin')
                     <div class="alert alert-danger">{{ $message }}</div>

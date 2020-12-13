@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use RealRashid\SweetAlert\Facades\Alert;
+
 use DB;
 use App\JenisMesin;
 use Auth;
@@ -55,14 +57,15 @@ class JenisMesinController extends Controller
         $request->validate([
             'jenis_mesin' => 'required|max:45|unique:jenis_mesin'
         ]);
-
-        $query = DB::table('jenis_mesin')->insert([
-            'jenis_mesin' => ucwords($request['jenis_mesin']), 
-        ]);
-
+        
+        $jenismesin = JenisMesin::create([
+                    'jenis_mesin' => strtolower($request['jenis_mesin']),
+                    'createduser_id' => Auth::user()->id
+                    ]);
     
-        return redirect('/jenismesin')->with('success', 'Post Berhasil Disimpan !');
-
+        Alert::success('Berhasil', 'Berhasil Menambahkan Data');
+        return redirect('/jenismesin');    
+        // return redirect('/jenismesin')->with('success', 'Post Berhasil Disimpan !');
     }
 
     /**
@@ -84,7 +87,11 @@ class JenisMesinController extends Controller
      */
     public function edit($id)
     {
-        //
+        $user = Auth::user();
+        $jenismesin1 = JenisMesin::all()->sortBy('jenis_mesin');
+
+        $jenismesin = JenisMesin::find($id);
+        return view('jenismesin.edit', compact('jenismesin', 'jenismesin1'));
     }
 
     /**
@@ -96,7 +103,16 @@ class JenisMesinController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $request->validate([
+            'jenis_mesin' => 'required|max:45',
+        ]);
+
+        $update = JenisMesin::where('id', $id)->update([
+            'jenis_mesin' => $request['jenis_mesin']
+        ]);
+
+        Alert::success('Berhasil', 'Berhasil Mengedit Data');
+        return redirect('/jenismesin');
     }
 
     /**
@@ -107,6 +123,8 @@ class JenisMesinController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $jenismesin = JenisMesin::destroy($id);
+        Alert::success('Berhasil', 'Berhasil Menghapus Data');
+        return redirect('/jenismesin');
     }
 }
