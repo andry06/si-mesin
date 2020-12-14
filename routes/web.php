@@ -12,7 +12,8 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('auth.login');
+    // $this->redirectTo = route('login');
 });
 
 // Route::get('/master', function(){
@@ -49,6 +50,7 @@ Route::get('/', function () {
 
 Route::resource('perusahaan', 'PerusahaanController');
 Route::resource('jenismesin', 'JenisMesinController');
+Route::resource('users', 'UserController');
 Auth::routes();
 
 Route::get('/index', function(){

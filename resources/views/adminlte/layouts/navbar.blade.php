@@ -121,5 +121,16 @@
           <i class="fas fa-th-large"></i>
         </a>
       </li>
+      <li style="padding-top: 8px" >
+      <a class="btn-primary" style="padding: 16px" href="{{ route('logout') }}"
+                                       onclick="event.preventDefault();
+                                                     document.getElementById('logout-form').submit();">
+                                        {{ __('LOGOUT') }}
+                                    </a>
+
+                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                        @csrf
+                                    </form>
+                                    </li>
     </ul>
   </nav>
