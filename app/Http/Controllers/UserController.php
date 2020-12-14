@@ -43,17 +43,30 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
+        // dd($request);
         $request->validate([
             'name' => 'required|max:45|string',
+            'nik' => 'required|max:15',
             'email' => 'required|unique:users|email|string',
-            'password' => 'required|string|min:8|confirmed'
+            'password' => 'required|string|min:8|confirmed',
+            'level' => 'required',
+            'photo' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048'
         ]);
+
+        $photo = time().'_'.$request['name'].'.'.$request->photo->extension(); 
 
         $user = User::create([
             'name' => $request['name'],
+            'nik' => $request['nik'],
             'email' => $request['email'],
             'password' => Hash::make($request['password']),
+            'level' => $request['level'],
+            'barcode_user' => $request['barcode_user'],
+            'photo' => $photo
         ]);
+
+        $request->photo->move(public_path('img'), $photo);
+        
 
         Alert::success('Berhasil', 'Berhasil Menambahkan User');
         return redirect('/users');    

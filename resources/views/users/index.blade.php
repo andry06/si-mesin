@@ -52,9 +52,9 @@ DATA USERS PENGGUNA
                     <tr>
                       <th scope="col" style="width: 10px">No</th>
                       <th scope="col" class="text-center">Nama</th>
+                      <th scope="col" class="text-center">NIK</th>
                       <th scope="col" class="text-center">Email</th>
                       <th scope="col" class="text-center">Level</th>
-                      <th scope="col" class="text-center">Barcode User</th>
                       <th scope="col" class="text-center">Action</th>
                     </tr>
                   </thead>
@@ -66,9 +66,9 @@ DATA USERS PENGGUNA
                         <tr>
                             <td> {{  $no+=1 }}</td>
                             <td class="text-center" > {{ strtoupper($user->name) }}</td>
+                            <td class="text-center" > {{ strtoupper($user->nik) }}</td>
                             <td class="text-center" > {{ strtolower($user->email) }}</td>
                             <td class="text-center" > {{ strtoupper($user->level) }}</td>
-                            <td class="text-center" > {{ strtoupper($user->barcode_user) }}</td>
                             <td style="width:10px; padding-top:6px; padding-bottom: 0px;" >
                                 <!-- <center> -->
                               <a href="/users/{{ $user->id }}/edit" class="btn btn-sm btn-success">Edit</a> | 
@@ -107,7 +107,7 @@ DATA USERS PENGGUNA
               </button>
             </div>
             <div class="modal-body">
-              <form method="POST" role="form"  action="/users">
+              <form method="POST" role="form"  action="/users" enctype="multipart/form-data">
                 @csrf
                 <div class="card-body">
 
@@ -202,18 +202,15 @@ DATA USERS PENGGUNA
                       </span>
                     @enderror
                 </div>
-
-                <input id="barcodeuser" type="text" class="form-control @error('nik') is-invalid @enderror" name="barcodeuser" value="{{ old('barcodeuser') }}" placeholder="Barcode User" autocomplete="nik" autofocus>
-<!-- <p id="barcodeuser"></p> -->
+                
+                <input id="barcodeuser" type="hidden" class="form-control @error('barcode_user') is-invalid @enderror" name="barcode_user" value="{{ old('barcodeuser') }}" placeholder="Barcode User" autocomplete="nik" autofocus>
+                  
                   <div class="form-group">
-                    <label for="exampleInputFile">File input</label>
+                    <label for="photo">File input</label>
                     <div class="input-group">
                       <div class="custom-file">
-                        <input type="file" class="custom-file-input" id="exampleInputFile">
-                        <label class="custom-file-label" for="exampleInputFile">Choose file</label>
-                      </div>
-                      <div class="input-group-append">
-                        <span class="input-group-text">Upload</span>
+                      <!-- <label for="formFileSm" class="form-label">Small file input example</label> -->
+                      <input class="form-control form-control" name="photo" id="formFileSm" type="file">
                       </div>
                     </div>
                   </div>
@@ -271,7 +268,7 @@ DATA USERS PENGGUNA
   $('#name').keyup(function(){ 
     var name = $("#name").val();
     var nik = $("#nik").val();
-    var namepot = name.substring(0, 3);
+    var namepot = name.substring(0, 2);
     var namepotbes = namepot.toUpperCase();
     var gabungan = namepotbes.concat(nik);
     $('#barcodeuser').val(gabungan);
@@ -281,7 +278,7 @@ DATA USERS PENGGUNA
     $('#nik').keyup(function(){ 
     var name = $("#name").val();
     var nik = $("#nik").val();
-    var namepot = name.substring(0, 3);
+    var namepot = name.substring(0, 2);
     var namepotbes = namepot.toUpperCase();
     var gabungan = namepotbes.concat(nik);
     $('#barcodeuser').val(gabungan);

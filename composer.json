@@ -12,7 +12,8 @@
         "fideloper/proxy": "^4.4",
         "laravel/framework": "^6.20",
         "laravel/tinker": "^2.5",
-        "realrashid/sweet-alert": "^3.2"
+        "realrashid/sweet-alert": "^3.2",
+        "milon/barcode": "^6.0"
     },
     "require-dev": {
         "facade/ignition": "^1.16.4",
@@ -60,4 +61,5 @@
             "@php artisan key:generate --ansi"
         ]
     }
+    
 }
