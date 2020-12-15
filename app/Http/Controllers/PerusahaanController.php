@@ -59,26 +59,26 @@ class PerusahaanController extends Controller
 
         
         
-        // $user = Auth::user();
-        // $perusahaan = $user->perusahaan()->create([
-        //         'nama_perusahaan' => $request['nama_perusahaan'], 
-        //         'alamat' => $request['alamat'],
-        //         'no_telp' => $request['no_telp'],
-        //         'email' => $request['email']
-        // ]);
-        // return redirect('perusahaan')->with('success', 'Post Berhasil Disimpan !');
-
-         $perusahaan = Perusahaan::create([
-            'nama_perusahaan' => $request['nama_perusahaan'], 
+        $user = Auth::user();
+        $perusahaan = $user->perusahaan()->create([
+                'nama_perusahaan' => $request['nama_perusahaan'], 
                 'alamat' => $request['alamat'],
                 'no_telp' => $request['no_telp'],
-                'email' => $request['email'],
+                'email' => $request['email']
         ]);
+        return redirect('perusahaan')->with('success', 'Post Berhasil Disimpan !');
 
-        $user = Auth::user();
-        $user->perusahaan()->associate($perusahaan);
+        //  $perusahaan = Perusahaan::create([
+        //     'nama_perusahaan' => $request['nama_perusahaan'], 
+        //         'alamat' => $request['alamat'],
+        //         'no_telp' => $request['no_telp'],
+        //         'email' => $request['email'],
+        // ]);
 
-        $user->save;
+        // $user = Auth::user();
+        // $user->perusahaan()->associate($perusahaan);
+
+        // $user->save;
     }
 
     public function index(){

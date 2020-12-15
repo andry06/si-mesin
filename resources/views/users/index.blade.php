@@ -108,50 +108,50 @@ DATA USERS PENGGUNA
                 <span aria-hidden="true">&times;</span>
               </button>
             </div>
-        <div class="modal-body">
-        <form method="POST" role="form"  action="/users" enctype="multipart/form-data">
+              <div class="modal-body">
+              <form method="POST" role="form"  id="editform" enctype="multipart/form-data">
                 @csrf
                 @method('PUT')
-                <input type="hidden" name="id" id="id">
-               <div class="card-body">
-                  <div class="form-group">
-                    <label for="nama">{{ __('Full Name') }}</label>
-                    <div class="input-group mb-3">
-                      <div class="input-group-prepend">
-                        <span class="input-group-text"><i class="fas fa-user"></i></span>
-                      </div>
-                      <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" placeholder="{{ __('Full Name') }}" required autocomplete="name" autofocus>
+                <div class="card-body">
+
+                <div class="form-group">
+                  <label for="nama">{{ __('Full Name') }}</label>
+                  <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text"><i class="fas fa-user"></i></span>
                     </div>
+                    <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" placeholder="{{ __('Full Name') }}" required autocomplete="name" autofocus>
+                  </div>
                     @error('name')
                       <span class="invalid-feedback" role="alert">
                         <strong>{{ $message }}</strong>
                       </span>
                     @enderror
-                  </div>
+                </div>
 
-                  <div class="form-group">
-                    <label for="nik">{{ __('NIK') }}</label>
-                    <div class="input-group mb-3">
-                      <div class="input-group-prepend">
-                        <span class="input-group-text"><i class="fas fa-id-card"></i></span>
-                      </div>
-                      <input id="nik" type="number" class="form-control @error('nik') is-invalid @enderror" name="nik" value="{{ old('nik') }}" placeholder="Nomer Induk Karyawan" autocomplete="nik" autofocus>
+                <div class="form-group">
+                  <label for="nik">{{ __('NIK') }}</label>
+                  <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text"><i class="fas fa-id-card"></i></span>
                     </div>
+                    <input id="nik" type="number" class="form-control @error('nik') is-invalid @enderror" name="nik" value="{{ old('nik') }}" placeholder="Nomer Induk Karyawan" autocomplete="nik" autofocus>
+                  </div>
                     @error('nik')
                       <span class="invalid-feedback" role="alert">
                         <strong>{{ $message }}</strong>
                       </span>
                     @enderror
-                  </div>
+                </div>
 
-                  <div class="form-group">
-                    <label for="email">{{ __('Email Address') }}</label>
-                    <div class="input-group mb-3">
-                      <div class="input-group-prepend">
-                        <span class="input-group-text"><i class="fas fa-envelope"></i></span>
-                      </div>
-                      <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" placeholder="{{ __('Email Address') }}" required autocomplete="email">
+                <div class="form-group">
+                  <label for="email">{{ __('Email Address') }}</label>
+                  <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text"><i class="fas fa-envelope"></i></span>
                     </div>
+                    <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" placeholder="{{ __('Email Address') }}" required autocomplete="email">
+                  </div>
                         @error('email')
                           <span class="invalid-feedback" role="alert">
                             <strong>{{ $message }}</strong>
@@ -159,12 +159,13 @@ DATA USERS PENGGUNA
                         @enderror
                   </div>
 
-                  <div class="form-group">
-                    <label for="level">{{ __('Level') }}</label>
-                    <div class="input-group mb-3">
-                      <div class="input-group-prepend">
-                        <span class="input-group-text"><i class="fas fa-list"></i></span>
-                      </div>
+      
+                <div class="form-group">
+                  <label for="level">{{ __('Level') }}</label>
+                  <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text"><i class="fas fa-list"></i></span>
+                    </div>
                       <select id="level" name="level" class="form-control @error('level') is-invalid @enderror">
                         <option value="">== Pilih Level ==</option>
                         <option value="administrator" @if (old('level') == 'administrator') selected @endif >Adminstrator</option>
@@ -173,30 +174,30 @@ DATA USERS PENGGUNA
                         <option value="supervisor" @if (old('level') == 'supervisor') selected @endif>Supervisor</option>
                         <option value="security" @if (old('level') == 'sucurity') selected @endif>Security</option>
                       </select>
-                    </div>
+                  </div>
                       @error('level')
                         <span class="invalid-feedback" role="alert">
                           <strong>{{ $message }}</strong>
                         </span>
                       @enderror
-                  </div>
+                </div>
                 
-                  <input id="barcodeuser" type="hidden" class="form-control @error('barcode_user') is-invalid @enderror" name="barcode_user" value="{{ old('barcodeuser') }}" placeholder="Barcode User" autocomplete="barcodeuser" autofocus>
+                <input id="barcodeuser" type="hidden" class="form-control @error('barcode_user') is-invalid @enderror" name="barcode_user" value="{{ old('barcodeuser') }}" placeholder="Barcode User" autocomplete="barcodeuser" autofocus>
                   
-                  <div class="form-group">
-                    <label for="photo">File input</label>
-                    <div class="input-group">
-                      <div class="custom-file">
-                      <!-- <label for="formFileSm" class="form-label">Small file input example</label> -->
-                      <input class="form-control form-control" name="photo" id="formFileSm" type="file">
-                      </div>
+                <div class="form-group">
+                  <label for="photo">File Photo (Isi jika Anda ingin Mengganti Foto)</label>
+                  <div class="input-group">
+                    <div class="custom-file">
+                    <!-- <label for="formFileSm" class="form-label">Small file input example</label> -->
+                    <input class="form-control form-control" name="photo" id="formFileSm" type="file">
                     </div>
                   </div>
+                </div>
             </div>
             <div class="modal-footer justify-content-between">
               <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
               <button type="submit" class="btn btn-primary">
-                {{ __('Save') }}
+                {{ __('Register') }}
               </button>
               </form>
             </div>
@@ -316,7 +317,7 @@ DATA USERS PENGGUNA
                 <input id="barcodeuser" type="hidden" class="form-control @error('barcode_user') is-invalid @enderror" name="barcode_user" value="{{ old('barcodeuser') }}" placeholder="Barcode User" autocomplete="barcodeuser" autofocus>
                   
                 <div class="form-group">
-                  <label for="photo">File input</label>
+                  <label for="photo">File Photo</label>
                   <div class="input-group">
                     <div class="custom-file">
                     <!-- <label for="formFileSm" class="form-label">Small file input example</label> -->
@@ -393,37 +394,9 @@ DATA USERS PENGGUNA
     $('#barcodeuser').val(gabungan);
     })
  </script>   
-
+ 
 <script>
 $(document).ready(function () {
-
-$.ajaxSetup({
-    headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        }
-});
-
-$('body').on('click', '#submit', function (event) {
-    event.preventDefault()
-    var id = $("#color_id").val();
-    var name = $("#name").val();
-   
-    $.ajax({
-      url: 'color/' + id,
-      type: "POST",
-      data: {
-        id: id,
-        name: name,
-      },
-      dataType: 'json',
-      success: function (data) {
-          
-          $('#companydata').trigger("reset");
-          $('#practice_modal').modal('hide');
-          window.location.reload(true);
-      }
-  });
-});
 
 $('body').on('click', '#edit', function (event) {
 
@@ -437,6 +410,7 @@ $('body').on('click', '#edit', function (event) {
          $('#email').val(data.data.email);
          $('#barcodeuser').val(data.data.barcode_user);
          $('#level').val(data.data.level);
+         $("#editform").attr("action","users/"+id);
      })
 });
 

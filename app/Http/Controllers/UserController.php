@@ -64,7 +64,7 @@ class UserController extends Controller
             'photo' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048'
         ]);
 
-        $photo = time().'_'.$request['name'].'.'.$request->photo->extension(); 
+        $photo = date('d-m-Y').'_'.date('h_i_s').'_'.$request['name'].'.'.$request->photo->extension(); 
 
         $user = User::create([
             'name' => $request['name'],
@@ -125,15 +125,30 @@ class UserController extends Controller
             'nik' => 'required|max:15',
             'email' => 'required|email',
             'level' => 'required',
+            'barcode_user' => 'required',
             'photo' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048'
         ]);
-
-        $update = User::where('id', $request['id'])->update([
+        
+        if(empty($request['photo'])){
+        $update = User::where('id', $id)->update([
             'name' => $request['name'],
             'nik' => $request['nik'],
             'level' => $request['level'],
-            'email' => $request['email']
+            'email' => $request['email'],
+            'barcode_user' => $request['barcode_user']
         ]);
+        }else{
+            $photo = date('d-m-Y').'_'.date('h_i_s').'_'.$request['name'].'.'.$request->photo->extension(); 
+            $update = User::where('id', $id)->update([
+                'name' => $request['name'],
+                'nik' => $request['nik'],
+                'level' => $request['level'],
+                'email' => $request['email'],
+                'barcode_user' => $request['barcode_user'],
+                'photo' => $photo
+            ]);
+            $request->photo->move(public_path('img\users'), $photo);   
+        }
         Alert::success('Berhasil', 'Berhasil Mengedit User');
         return redirect('/users');    
     }
