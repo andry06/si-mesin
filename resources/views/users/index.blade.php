@@ -71,8 +71,9 @@ DATA USERS PENGGUNA
                             <td class="text-center" > {{ strtoupper($user->level) }}</td>
                             <td style="width:10px; padding-top:6px; padding-bottom: 0px;" >
                                 <!-- <center> -->
-                              <a href="/users/{{ $user->id }}/edit" class="btn btn-sm btn-success">Edit</a> | 
-                              <form style="display: inline-block" action="/users/{{ $user->id }}" method="POST">
+                                <!-- <button type="button" id="edit" data-toggle="modal" data-target="#myEdit" class="btn btn-success edit_komentar kecil" ><i class="fa fa-edit"></i></button> -->
+                              <a data-id="{{ $user->id }}" id="edit" data-toggle="modal" data-target="#myEdit" class="btn btn-sm btn-success"><i class="fa fa-edit"></i></a> 
+                              | <form style="display: inline-block" action="/users/{{ $user->id }}" method="POST">
                                 @csrf
                                 @method('DELETE')
                                 <input style="display: inline-block" type="submit" value="Delete" class="btn btn-sm btn-danger">
@@ -96,8 +97,117 @@ DATA USERS PENGGUNA
     </div>
     </div>
 
+<!-- Modal Edit Data data kelas-->
+<div id="myEdit" class="modal fade" tabindex="-1" role="dialog">
+<div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header bg-info">
+              <h4 class="modal-title">EDIT DATA USER</h4>
+              
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+        <div class="modal-body">
+        <form method="POST" role="form"  action="/users" enctype="multipart/form-data">
+                @csrf
+                @method('PUT')
+                <input type="hidden" name="id" id="id">
+               <div class="card-body">
+                  <div class="form-group">
+                    <label for="nama">{{ __('Full Name') }}</label>
+                    <div class="input-group mb-3">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text"><i class="fas fa-user"></i></span>
+                      </div>
+                      <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" placeholder="{{ __('Full Name') }}" required autocomplete="name" autofocus>
+                    </div>
+                    @error('name')
+                      <span class="invalid-feedback" role="alert">
+                        <strong>{{ $message }}</strong>
+                      </span>
+                    @enderror
+                  </div>
+
+                  <div class="form-group">
+                    <label for="nik">{{ __('NIK') }}</label>
+                    <div class="input-group mb-3">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text"><i class="fas fa-id-card"></i></span>
+                      </div>
+                      <input id="nik" type="number" class="form-control @error('nik') is-invalid @enderror" name="nik" value="{{ old('nik') }}" placeholder="Nomer Induk Karyawan" autocomplete="nik" autofocus>
+                    </div>
+                    @error('nik')
+                      <span class="invalid-feedback" role="alert">
+                        <strong>{{ $message }}</strong>
+                      </span>
+                    @enderror
+                  </div>
+
+                  <div class="form-group">
+                    <label for="email">{{ __('Email Address') }}</label>
+                    <div class="input-group mb-3">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text"><i class="fas fa-envelope"></i></span>
+                      </div>
+                      <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" placeholder="{{ __('Email Address') }}" required autocomplete="email">
+                    </div>
+                        @error('email')
+                          <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                          </span>
+                        @enderror
+                  </div>
+
+                  <div class="form-group">
+                    <label for="level">{{ __('Level') }}</label>
+                    <div class="input-group mb-3">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text"><i class="fas fa-list"></i></span>
+                      </div>
+                      <select id="level" name="level" class="form-control @error('level') is-invalid @enderror">
+                        <option value="">== Pilih Level ==</option>
+                        <option value="administrator" @if (old('level') == 'administrator') selected @endif >Adminstrator</option>
+                        <option value="adm mekanik" @if (old('level') == 'adm mekanik') selected @endif >Adm Mekanik</option>
+                        <option value="mekanik" @if (old('level') == 'mekanik') selected @endif>Mekanik</option>
+                        <option value="supervisor" @if (old('level') == 'supervisor') selected @endif>Supervisor</option>
+                        <option value="security" @if (old('level') == 'sucurity') selected @endif>Security</option>
+                      </select>
+                    </div>
+                      @error('level')
+                        <span class="invalid-feedback" role="alert">
+                          <strong>{{ $message }}</strong>
+                        </span>
+                      @enderror
+                  </div>
+                
+                  <input id="barcodeuser" type="hidden" class="form-control @error('barcode_user') is-invalid @enderror" name="barcode_user" value="{{ old('barcodeuser') }}" placeholder="Barcode User" autocomplete="barcodeuser" autofocus>
+                  
+                  <div class="form-group">
+                    <label for="photo">File input</label>
+                    <div class="input-group">
+                      <div class="custom-file">
+                      <!-- <label for="formFileSm" class="form-label">Small file input example</label> -->
+                      <input class="form-control form-control" name="photo" id="formFileSm" type="file">
+                      </div>
+                    </div>
+                  </div>
+            </div>
+            <div class="modal-footer justify-content-between">
+              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+              <button type="submit" class="btn btn-primary">
+                {{ __('Save') }}
+              </button>
+              </form>
+            </div>
+          </div>
+        </div>
+    </div>
+</div>
+</div>
+<!-- Modal Edit data kelas-->
 <!-- ===================================== // MODAL TAMBAH // ===================================== -->
-<div class="modal fade" id="modal-default">
+<div class="modal fade" id="modal-default" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
           <div class="modal-content">
             <div class="modal-header bg-info">
@@ -142,84 +252,84 @@ DATA USERS PENGGUNA
                 </div>
 
                 <div class="form-group">
-                <label for="email">{{ __('Email Address') }}</label>
-                <div class="input-group mb-3">
-                  <div class="input-group-prepend">
-                    <span class="input-group-text"><i class="fas fa-envelope"></i></span>
+                  <label for="email">{{ __('Email Address') }}</label>
+                  <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text"><i class="fas fa-envelope"></i></span>
+                    </div>
+                    <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" placeholder="{{ __('Email Address') }}" required autocomplete="email">
                   </div>
-                  <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" placeholder="{{ __('Email Address') }}" required autocomplete="email">
-                </div>
-                      @error('email')
+                        @error('email')
+                          <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                          </span>
+                        @enderror
+                  </div>
+
+                <div class="form-group">
+                  <label for="password">{{ __('Password') }}</label>
+                  <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text"><i class="fas fa-key"></i></span>
+                    </div>
+                    <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" placeholder="{{ __('Password') }}" required autocomplete="new-password">
+                  </div>
+                      @error('password')
+                        <span class="invalid-feedback" role="alert">
+                          <strong>{{ $message }}</strong>
+                        </span>
+                      @enderror
+                  </div>
+
+                <div class="form-group">
+                  <label for="password-confirm">{{ __('Password Confirm') }}</label>
+                  <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text"><i class="fas fa-key"></i></span>
+                    </div>
+                    <input id="password-confirm" type="password" class="form-control" name="password_confirmation" placeholder="{{ __('Password Confirm') }}" required autocomplete="new-password">
+                  </div>
+                  </div>
+
+                <div class="form-group">
+                  <label for="level">{{ __('Level') }}</label>
+                  <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text"><i class="fas fa-list"></i></span>
+                    </div>
+                      <select id="level" name="level" class="form-control @error('level') is-invalid @enderror">
+                        <option value="">== Pilih Level ==</option>
+                        <option value="administrator" @if (old('level') == 'administrator') selected @endif >Adminstrator</option>
+                        <option value="adm mekanik" @if (old('level') == 'adm mekanik') selected @endif >Adm Mekanik</option>
+                        <option value="mekanik" @if (old('level') == 'mekanik') selected @endif>Mekanik</option>
+                        <option value="supervisor" @if (old('level') == 'supervisor') selected @endif>Supervisor</option>
+                        <option value="security" @if (old('level') == 'sucurity') selected @endif>Security</option>
+                      </select>
+                  </div>
+                      @error('level')
                         <span class="invalid-feedback" role="alert">
                           <strong>{{ $message }}</strong>
                         </span>
                       @enderror
                 </div>
-
-                <div class="form-group">
-                <label for="password">{{ __('Password') }}</label>
-                <div class="input-group mb-3">
-                  <div class="input-group-prepend">
-                    <span class="input-group-text"><i class="fas fa-key"></i></span>
-                  </div>
-                  <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" placeholder="{{ __('Password') }}" required autocomplete="new-password">
-                </div>
-                    @error('password')
-                      <span class="invalid-feedback" role="alert">
-                        <strong>{{ $message }}</strong>
-                      </span>
-                    @enderror
-                </div>
-
-                <div class="form-group">
-                <label for="password-confirm">{{ __('Password Confirm') }}</label>
-                <div class="input-group mb-3">
-                  <div class="input-group-prepend">
-                    <span class="input-group-text"><i class="fas fa-key"></i></span>
-                  </div>
-                  <input id="password-confirm" type="password" class="form-control" name="password_confirmation" placeholder="{{ __('Password Confirm') }}" required autocomplete="new-password">
-                </div>
-                </div>
-
-                <div class="form-group">
-                <label for="level">{{ __('Level') }}</label>
-                <div class="input-group mb-3">
-                  <div class="input-group-prepend">
-                    <span class="input-group-text"><i class="fas fa-list"></i></span>
-                  </div>
-                    <select id="level" name="level" class="form-control @error('level') is-invalid @enderror">
-                      <option value="">== Pilih Level ==</option>
-                      <option value="administrator" @if (old('level') == 'administrator') selected @endif >Adminstrator</option>
-                      <option value="adm mekanik" @if (old('level') == 'adm mekanik') selected @endif >Adm Mekanik</option>
-                      <option value="mekanik" @if (old('level') == 'mekanik') selected @endif>Mekanik</option>
-                      <option value="supervisor" @if (old('level') == 'supervisor') selected @endif>Supervisor</option>
-                      <option value="security" @if (old('level') == 'sucurity') selected @endif>Security</option>
-                    </select>
-                </div>
-                    @error('level')
-                      <span class="invalid-feedback" role="alert">
-                        <strong>{{ $message }}</strong>
-                      </span>
-                    @enderror
-                </div>
                 
-                <input id="barcodeuser" type="hidden" class="form-control @error('barcode_user') is-invalid @enderror" name="barcode_user" value="{{ old('barcodeuser') }}" placeholder="Barcode User" autocomplete="nik" autofocus>
+                <input id="barcodeuser" type="hidden" class="form-control @error('barcode_user') is-invalid @enderror" name="barcode_user" value="{{ old('barcodeuser') }}" placeholder="Barcode User" autocomplete="barcodeuser" autofocus>
                   
-                  <div class="form-group">
-                    <label for="photo">File input</label>
-                    <div class="input-group">
-                      <div class="custom-file">
-                      <!-- <label for="formFileSm" class="form-label">Small file input example</label> -->
-                      <input class="form-control form-control" name="photo" id="formFileSm" type="file">
-                      </div>
+                <div class="form-group">
+                  <label for="photo">File input</label>
+                  <div class="input-group">
+                    <div class="custom-file">
+                    <!-- <label for="formFileSm" class="form-label">Small file input example</label> -->
+                    <input class="form-control form-control" name="photo" id="formFileSm" type="file">
                     </div>
                   </div>
+                </div>
             </div>
             <div class="modal-footer justify-content-between">
               <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
               <button type="submit" class="btn btn-primary">
-                                    {{ __('Register') }}
-                                </button>
+                {{ __('Register') }}
+              </button>
               </form>
             </div>
           </div>
@@ -228,7 +338,6 @@ DATA USERS PENGGUNA
         <!-- /.modal-dialog -->
       </div>
       <!-- /.modal -->
-
 @endsection
 
 @push('scripts')
@@ -285,6 +394,53 @@ DATA USERS PENGGUNA
     })
  </script>   
 
+<script>
+$(document).ready(function () {
 
+$.ajaxSetup({
+    headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+});
+
+$('body').on('click', '#submit', function (event) {
+    event.preventDefault()
+    var id = $("#color_id").val();
+    var name = $("#name").val();
+   
+    $.ajax({
+      url: 'color/' + id,
+      type: "POST",
+      data: {
+        id: id,
+        name: name,
+      },
+      dataType: 'json',
+      success: function (data) {
+          
+          $('#companydata').trigger("reset");
+          $('#practice_modal').modal('hide');
+          window.location.reload(true);
+      }
+  });
+});
+
+$('body').on('click', '#edit', function (event) {
+
+    event.preventDefault();
+    var id = $(this).data('id');
+    console.log(id)
+    $.get('users/' + id + '/edit', function (data) {
+         $('#id').val(data.data.id);
+         $('#name').val(data.data.name);
+         $('#nik').val(data.data.nik);
+         $('#email').val(data.data.email);
+         $('#barcodeuser').val(data.data.barcode_user);
+         $('#level').val(data.data.level);
+     })
+});
+
+}); 
+</script>
 @endpush
 

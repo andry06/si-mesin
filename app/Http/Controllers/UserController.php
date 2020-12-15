@@ -12,7 +12,18 @@ use App\User;
 use Auth;
 
 class UserController extends Controller
-{
+{   
+
+    public function __construct(){
+        //untuk pengecualian pakai except
+        // $this->middleware('auth')->except('index');
+
+        //untuk yg disetujui di berlakukan autentifikasi
+        // $this->middleware('auth')->only('delete');
+
+        $this->middleware('auth');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -91,7 +102,12 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        //
+        
+        $user = User::find($id);
+
+	    return response()->json([
+	      'data' => $user
+	    ]);
     }
 
     /**
@@ -103,7 +119,23 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        dd($request)
+        $request->validate([
+            'name' => 'required|max:45|string',
+            'nik' => 'required|max:15',
+            'email' => 'required|email',
+            'level' => 'required',
+            'photo' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048'
+        ]);
+
+        $update = User::where('id', $id)->update([
+            'name' => $request['name'],
+            'nik' => $request['nik'],
+            'level' => $request['level'],
+            'email' => $request['email']
+        ]);
+        Alert::success('Berhasil', 'Berhasil Mengedit User');
+        return redirect('/users');    
     }
 
     /**
