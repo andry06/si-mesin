@@ -119,7 +119,7 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        dd($request)
+            
         $request->validate([
             'name' => 'required|max:45|string',
             'nik' => 'required|max:15',
@@ -128,7 +128,7 @@ class UserController extends Controller
             'photo' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048'
         ]);
 
-        $update = User::where('id', $id)->update([
+        $update = User::where('id', $request['id'])->update([
             'name' => $request['name'],
             'nik' => $request['nik'],
             'level' => $request['level'],
