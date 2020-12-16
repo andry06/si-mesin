@@ -76,7 +76,8 @@ DATA USERS PENGGUNA
                               | <form style="display: inline-block" action="/users/{{ $user->id }}" method="POST">
                                 @csrf
                                 @method('DELETE')
-                                <input style="display: inline-block" type="submit" value="Delete" class="btn btn-sm btn-danger">
+                                <button type="submit" class="btn btn-sm btn-danger kecil"><i class="fa fa-trash"></i></button>
+                                <!-- <input style="display: inline-block" type="submit" value="Delete" class="btn btn-xs btn-danger"> -->
                               </form>
                               <!-- </center> -->
                             </td>

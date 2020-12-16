@@ -161,6 +161,7 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $user = User::destroy($id);
+        return redirect('/users')->with('success', 'Berhasil hapus data');
     }
 }
