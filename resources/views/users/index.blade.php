@@ -129,9 +129,9 @@ DATA USERS PENGGUNA
                   </div>
                   <div class="card-footer text-muted">
                   <center>
-                 
-                  <img src="data:image/png;base64,{{DNS1D::getBarcodePNG('4445645656', 'I25+')}}" alt="barcode" />
+                  <img id="generatebarcode">
                   <br>
+                  <!-- <span id="generatebarcode"></span></br> -->
                   <span id="barcodeuser" style="font-weight: bold"></span>
                   </center> 
                   </div>
@@ -478,13 +478,16 @@ $('body').on('click', '#show', function (event) {
         var namabesar = nama.toUpperCase();
         var level = data.data.level;
         var levelbesar = level.toUpperCase();
+        var barcode = data.data.barcode_user;
+   
+        console.log(barcode)
          $('#id').val(data.data.id);
          $('#tampilnama').html(namabesar);
          $('#tampilnik').html(data.data.nik);
          $('#tampillevel').html(levelbesar);
-         $('#barcodeuser').html(data.data.barcode_user);
-         console.log("/img/users/"+data.data.photo)
+         $('#barcodeuser').html(barcode);
          $("#tampilphoto").attr("src","/img/users/"+data.data.photo);
+         $("#generatebarcode").attr("src", "data:image/png;base64,{{DNS1D::getBarcodePNG('12131323', 'C39')}}");
      })
 });
 
