@@ -72,7 +72,8 @@ DATA USERS PENGGUNA
                             <td style="width:10px; padding-top:6px; padding-bottom: 0px;" >
                                 <!-- <center> -->
                                 <!-- <button type="button" id="edit" data-toggle="modal" data-target="#myEdit" class="btn btn-success edit_komentar kecil" ><i class="fa fa-edit"></i></button> -->
-                              <a data-id="{{ $user->id }}" id="edit" data-toggle="modal" data-target="#myEdit" class="btn btn-sm btn-success"><i class="fa fa-edit"></i></a> 
+                                <a data-id="{{ $user->id }}" id="edit" data-toggle="modal" data-target="#myEdit" class="btn btn-sm btn-success"><i class="fa fa-edit"></i></a>  
+                              |  <a data-id="{{ $user->id }}" id="show" data-toggle="modal" data-target="#myShow" class="btn btn-sm btn-primary"><i class="fa fa-eye"></i></a> 
                               | <form style="display: inline-block" action="/users/{{ $user->id }}" method="POST">
                                 @csrf
                                 @method('DELETE')
@@ -97,6 +98,51 @@ DATA USERS PENGGUNA
     </div>
     </div>
     </div>
+
+<!-- Modal Show Data data kelas-->
+<div id="myShow" class="modal fade" tabindex="-1" role="dialog">
+<div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header bg-info">
+              <h4 class="modal-title">TAMPIL DATA USER</h4>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+              <div class="modal-body">
+                <div class="card text-center">
+                  <div class="card-header">
+                    <h4>
+                      @foreach($perusahaan as $key => $pt)
+                        {{ $pt->nama_perusahaan }}
+                      @endforeach
+                    </h4>
+                    <span id="tampillevel" style="font-weight: bold"></span>
+                  </div>
+                  <div class="card-body">
+                    <img id="tampilphoto" width="130px" height="200px" class="img-thumbnail" alt="...">
+                    <br><br>
+                    <span id="tampilnama" style="font-weight: bold"></span>
+                    <br>
+                    <span id="tampilnik" style="font-weight: bold"></span>
+                  
+                  </div>
+                  <div class="card-footer text-muted">
+                  <center>
+                 
+                  <img src="data:image/png;base64,{{DNS1D::getBarcodePNG('4445645656', 'I25+')}}" alt="barcode" />
+                  <br>
+                  <span id="barcodeuser" style="font-weight: bold"></span>
+                  </center> 
+                  </div>
+                </div>
+            </div>
+          </div>
+        </div>
+    </div>
+</div>
+</div>
+<!-- Modal Edit data kelas-->
 
 <!-- Modal Edit Data data kelas-->
 <div id="myEdit" class="modal fade" tabindex="-1" role="dialog">
@@ -208,6 +254,7 @@ DATA USERS PENGGUNA
 </div>
 </div>
 <!-- Modal Edit data kelas-->
+
 <!-- ===================================== // MODAL TAMBAH // ===================================== -->
 <div class="modal fade" id="modal-default" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
@@ -412,6 +459,32 @@ $('body').on('click', '#edit', function (event) {
          $('#barcodeuser').val(data.data.barcode_user);
          $('#level').val(data.data.level);
          $("#editform").attr("action","users/"+id);
+     })
+});
+
+}); 
+</script>
+
+<script>
+$(document).ready(function () {
+
+$('body').on('click', '#show', function (event) {
+
+    event.preventDefault();
+    var id = $(this).data('id');
+    console.log(id)
+    $.get('users/' + id + '/edit', function (data) {
+        var nama = data.data.name;
+        var namabesar = nama.toUpperCase();
+        var level = data.data.level;
+        var levelbesar = level.toUpperCase();
+         $('#id').val(data.data.id);
+         $('#tampilnama').html(namabesar);
+         $('#tampilnik').html(data.data.nik);
+         $('#tampillevel').html(levelbesar);
+         $('#barcodeuser').html(data.data.barcode_user);
+         console.log("/img/users/"+data.data.photo)
+         $("#tampilphoto").attr("src","/img/users/"+data.data.photo);
      })
 });
 

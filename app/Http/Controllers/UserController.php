@@ -10,6 +10,7 @@ use RealRashid\SweetAlert\Facades\Alert;
 use DB;
 use App\User;
 use Auth;
+use App\Perusahaan;
 
 class UserController extends Controller
 {   
@@ -31,9 +32,9 @@ class UserController extends Controller
      */
     public function index()
     {
-
+        $perusahaan = Perusahaan::find(1)->get();
         $users = User::all()->sortBy('name');
-        return view('users.index', compact('users'));
+        return view('users.index', compact('users', 'perusahaan'));
     }
 
     /**
