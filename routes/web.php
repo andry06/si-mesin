@@ -47,10 +47,13 @@ Route::get('/', function () {
 // Route::delete('/perusahaan/{id}', 'PerusahaanController@destroy');
 
 // Route::resource('perusahaan', 'PerusahaanController')->middleware('auth');
-
+Route::post('/users/print', 'UserController@print')->name('printuser');
+Route::get('/users/hapus/{id}','UserController@hapus');
 Route::resource('perusahaan', 'PerusahaanController');
 Route::resource('jenismesin', 'JenisMesinController');
+
 Route::resource('users', 'UserController');
+
 Auth::routes();
 
 Route::get('/index', function(){

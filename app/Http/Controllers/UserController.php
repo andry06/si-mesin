@@ -55,7 +55,7 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        // dd($request);
+        
         $request->validate([
             'name' => 'required|max:45|string',
             'nik' => 'required|max:15',
@@ -82,6 +82,14 @@ class UserController extends Controller
 
         Alert::success('Berhasil', 'Berhasil Menambahkan User');
         return redirect('/users');    
+    }
+
+    public function print(Request $request)
+    {
+        $id = $request->id; // Ambil data NIS yang dikirim oleh index.php melalui form submit
+        $data = implode(",", $id);
+        $users = DB::select("select * from users where id in ($data)");
+        return view('users.print', compact('users'));
     }
 
     /**
@@ -163,7 +171,15 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
+        
+    }
+
+    public function hapus($id)
+    {
+        // menghapus data pegawai berdasarkan id yang dipilih
         $user = User::destroy($id);
-        return redirect('/users')->with('success', 'Berhasil hapus data');
+            
+       
+        return redirect('/users')->with('success', 'Berhasil hapus data');;
     }
 }
