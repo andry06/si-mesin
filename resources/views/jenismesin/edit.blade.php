@@ -91,7 +91,7 @@
        
         <div class="card card-info">
             <div class="card-header">
-                <h3 class="card-title">Tambah Data Jenis Mesin</h3>
+                <h3 class="card-title">EDIT Data Jenis Mesin </h3>
             </div>
             <!-- /.card-header -->
             <!-- form start -->

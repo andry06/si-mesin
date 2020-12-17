@@ -77,7 +77,7 @@ class UserController extends Controller
             'photo' => $photo
         ]);
 
-        $request->photo->move(public_path('img'), $photo);
+        $request->photo->move(public_path('img/users'), $photo);
         
 
         Alert::success('Berhasil', 'Berhasil Menambahkan User');
@@ -92,7 +92,8 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        //
+        $user = User::find($id);
+        return view('users.show', compact('user'));
     }
 
     /**
@@ -120,7 +121,6 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-            
         $request->validate([
             'name' => 'required|max:45|string',
             'nik' => 'required|max:15',
@@ -130,6 +130,7 @@ class UserController extends Controller
             'photo' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048'
         ]);
         
+       
         if(empty($request['photo'])){
         $update = User::where('id', $id)->update([
             'name' => $request['name'],
@@ -148,7 +149,7 @@ class UserController extends Controller
                 'barcode_user' => $request['barcode_user'],
                 'photo' => $photo
             ]);
-            $request->photo->move(public_path('img\users'), $photo);   
+            $request->photo->move(public_path('img/users'), $photo);   
         }
         Alert::success('Berhasil', 'Berhasil Mengedit User');
         return redirect('/users');    

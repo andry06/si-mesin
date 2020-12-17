@@ -129,12 +129,18 @@ DATA USERS PENGGUNA
                   </div>
                   <div class="card-footer text-muted">
                   <center>
-                  <img id="generatebarcode">
+                 
+                  <img src="data:image/png;base64,{{DNS1D::getBarcodePNG('4445645656', 'I25+')}}" alt="barcode" />
                   <br>
-                  <!-- <span id="generatebarcode"></span></br> -->
-                  <span id="barcodeuser" style="font-weight: bold"></span>
+                  <span id="barcodeusershow" style="font-weight: bold"></span>
                   </center> 
                   </div>
+                  <div class="modal-footer justify-content-between">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <a id="printidcard" class="btn btn-sm btn-warning"><i class="fa fa-print"></i> PRINT</a>
+                    <!-- <button type="submit" class="btn btn-primary">
+                      {{ __('Register') }}
+                    </button> -->
                 </div>
             </div>
           </div>
@@ -213,9 +219,9 @@ DATA USERS PENGGUNA
                     <div class="input-group-prepend">
                       <span class="input-group-text"><i class="fas fa-list"></i></span>
                     </div>
-                      <select id="level" name="level" class="form-control @error('level') is-invalid @enderror">
+                      <select id="level" name="level" required class="form-control @error('level') is-invalid @enderror">
                         <option value="">== Pilih Level ==</option>
-                        <option value="administrator" @if (old('level') == 'administrator') selected @endif >Adminstrator</option>
+                        <option value="administrator" @if (old('level') == 'administrator') selected @endif >Administrator</option>
                         <option value="adm mekanik" @if (old('level') == 'adm mekanik') selected @endif >Adm Mekanik</option>
                         <option value="mekanik" @if (old('level') == 'mekanik') selected @endif>Mekanik</option>
                         <option value="supervisor" @if (old('level') == 'supervisor') selected @endif>Supervisor</option>
@@ -271,12 +277,12 @@ DATA USERS PENGGUNA
                 <div class="card-body">
 
                 <div class="form-group">
-                  <label for="nama">{{ __('Full Name') }}</label>
+                  <label for="nama2">{{ __('Full Name') }}</label>
                   <div class="input-group mb-3">
                     <div class="input-group-prepend">
                       <span class="input-group-text"><i class="fas fa-user"></i></span>
                     </div>
-                    <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" placeholder="{{ __('Full Name') }}" required autocomplete="name" autofocus>
+                    <input id="name2" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" placeholder="{{ __('Full Name') }}" required autocomplete="name" autofocus>
                   </div>
                     @error('name')
                       <span class="invalid-feedback" role="alert">
@@ -286,12 +292,12 @@ DATA USERS PENGGUNA
                 </div>
 
                 <div class="form-group">
-                  <label for="nik">{{ __('NIK') }}</label>
+                  <label for="nik2">{{ __('NIK') }}</label>
                   <div class="input-group mb-3">
                     <div class="input-group-prepend">
                       <span class="input-group-text"><i class="fas fa-id-card"></i></span>
                     </div>
-                    <input id="nik" type="number" class="form-control @error('nik') is-invalid @enderror" name="nik" value="{{ old('nik') }}" placeholder="Nomer Induk Karyawan" autocomplete="nik" autofocus>
+                    <input id="nik2" type="number" class="form-control @error('nik') is-invalid @enderror" name="nik" value="{{ old('nik') }}" placeholder="Nomer Induk Karyawan" autocomplete="nik" autofocus>
                   </div>
                     @error('nik')
                       <span class="invalid-feedback" role="alert">
@@ -301,12 +307,12 @@ DATA USERS PENGGUNA
                 </div>
 
                 <div class="form-group">
-                  <label for="email">{{ __('Email Address') }}</label>
+                  <label for="email2">{{ __('Email Address') }}</label>
                   <div class="input-group mb-3">
                     <div class="input-group-prepend">
                       <span class="input-group-text"><i class="fas fa-envelope"></i></span>
                     </div>
-                    <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" placeholder="{{ __('Email Address') }}" required autocomplete="email">
+                    <input id="email2" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" placeholder="{{ __('Email Address') }}" required autocomplete="email">
                   </div>
                         @error('email')
                           <span class="invalid-feedback" role="alert">
@@ -341,14 +347,14 @@ DATA USERS PENGGUNA
                   </div>
 
                 <div class="form-group">
-                  <label for="level">{{ __('Level') }}</label>
+                  <label for="level2">{{ __('Level') }}</label>
                   <div class="input-group mb-3">
                     <div class="input-group-prepend">
                       <span class="input-group-text"><i class="fas fa-list"></i></span>
                     </div>
-                      <select id="level" name="level" class="form-control @error('level') is-invalid @enderror">
+                      <select id="level2" name="level" class="form-control @error('level') is-invalid @enderror">
                         <option value="">== Pilih Level ==</option>
-                        <option value="administrator" @if (old('level') == 'administrator') selected @endif >Adminstrator</option>
+                        <option value="administrator" @if (old('level') == 'administrator') selected @endif >Administrator</option>
                         <option value="adm mekanik" @if (old('level') == 'adm mekanik') selected @endif >Adm Mekanik</option>
                         <option value="mekanik" @if (old('level') == 'mekanik') selected @endif>Mekanik</option>
                         <option value="supervisor" @if (old('level') == 'supervisor') selected @endif>Supervisor</option>
@@ -362,14 +368,14 @@ DATA USERS PENGGUNA
                       @enderror
                 </div>
                 
-                <input id="barcodeuser" type="hidden" class="form-control @error('barcode_user') is-invalid @enderror" name="barcode_user" value="{{ old('barcodeuser') }}" placeholder="Barcode User" autocomplete="barcodeuser" autofocus>
+                <input id="barcodeuser2" type="hidden" class="form-control @error('barcode_user') is-invalid @enderror" name="barcode_user" value="{{ old('barcodeuser') }}" placeholder="Barcode User" autocomplete="barcodeuser" autofocus>
                   
                 <div class="form-group">
                   <label for="photo">File Photo</label>
                   <div class="input-group">
                     <div class="custom-file">
                     <!-- <label for="formFileSm" class="form-label">Small file input example</label> -->
-                    <input class="form-control form-control" name="photo" id="formFileSm" type="file">
+                    <input class="form-control form-control" name="photo" id="photo" type="file">
                     </div>
                   </div>
                 </div>
@@ -430,7 +436,6 @@ DATA USERS PENGGUNA
     var namepotbes = namepot.toUpperCase();
     var gabungan = namepotbes.concat(nik);
     $('#barcodeuser').val(gabungan);
-
     })
 
     $('#nik').keyup(function(){ 
@@ -441,6 +446,27 @@ DATA USERS PENGGUNA
     var gabungan = namepotbes.concat(nik);
     $('#barcodeuser').val(gabungan);
     })
+ </script>  
+  
+ <script type="text/javascript">
+  $('#name2').keyup(function(){ 
+    var name = $("#name2").val();
+    var nik = $("#nik2").val();
+    var namepot = name.substring(0, 2);
+    var namepotbes = namepot.toUpperCase();
+    var gabungan = namepotbes.concat(nik);
+    $('#barcodeuser2').val(gabungan);
+
+    })
+
+    $('#nik2').keyup(function(){ 
+    var name = $("#name2").val();
+    var nik = $("#nik2").val();
+    var namepot = name.substring(0, 2);
+    var namepotbes = namepot.toUpperCase();
+    var gabungan = namepotbes.concat(nik);
+    $('#barcodeuser2').val(gabungan);
+    })
  </script>   
  
 <script>
@@ -450,13 +476,14 @@ $('body').on('click', '#edit', function (event) {
 
     event.preventDefault();
     var id = $(this).data('id');
-    console.log(id)
+    
     $.get('users/' + id + '/edit', function (data) {
          $('#id').val(data.data.id);
          $('#name').val(data.data.name);
          $('#nik').val(data.data.nik);
          $('#email').val(data.data.email);
          $('#barcodeuser').val(data.data.barcode_user);
+         console.log(data.data.barcode_user)
          $('#level').val(data.data.level);
          $("#editform").attr("action","users/"+id);
      })
@@ -485,13 +512,13 @@ $('body').on('click', '#show', function (event) {
          $('#tampilnama').html(namabesar);
          $('#tampilnik').html(data.data.nik);
          $('#tampillevel').html(levelbesar);
-         $('#barcodeuser').html(barcode);
+         $('#barcodeusershow').html(data.data.barcode_user);
+         console.log("/img/users/"+data.data.photo)
          $("#tampilphoto").attr("src","/img/users/"+data.data.photo);
-         $("#generatebarcode").attr("src", "data:image/png;base64,{{DNS1D::getBarcodePNG('12131323', 'C39')}}");
+         $("#printidcard").attr("href","/users/"+data.data.id);
      })
 });
 
 }); 
 </script>
 @endpush
-
