@@ -45,12 +45,12 @@ DATA USERS PENGGUNA
                 <h3 class="card-title">Daftar Users</h3>
               </div>
               <!-- /.card-header -->
-              <div class="card-body table-responsive p-0" style="margin-top: 14px">
+              <div class="card-body table-responsive p-3" >
               <!-- <div class="card-body"> -->
               <form method="post" action="/users/print" id="form-kirim">
               @csrf
               
-                <table id="example1" class="table table-hover text-nowrap table-striped table-bordered">
+                <table id="example1"  class="table table-hover text-nowrap table-striped table-bordered">
                   <thead class="thead-info"> 
                     <tr>
                       <th width="5px"><input type="checkbox" id="check-all"></th>
@@ -78,8 +78,8 @@ DATA USERS PENGGUNA
                                 <!-- <center> -->
                                 <!-- <button type="button" id="edit" data-toggle="modal" data-target="#myEdit" class="btn btn-success edit_komentar kecil" ><i class="fa fa-edit"></i></button> -->
                                 <a data-id="{{ $user->id }}" data-toggle="modal" data-target="#myEdit" class="edit btn btn-sm btn-success"><i class="fa fa-edit"></i></a>  
-                              |  <a data-id="{{ $user->id }}" id="show" data-toggle="modal" data-target="#myShow" class="btn btn-sm btn-primary"><i class="fa fa-eye"></i></a> 
-                              |  <a href="/users/hapus/{{ $user->id }}" class="btn btn-sm btn-danger"><i class="fa fa-trash"></i></a> 
+                              |  <a data-id="{{ $user->id }}" data-toggle="modal" data-target="#myShow" class="tampil btn btn-sm btn-primary"><i class="fa fa-eye"></i></a> 
+                              |  <a href="/users/hapus/{{ $user->id }}" type="button" class="btn btn-sm btn-danger"><i class="fa fa-trash"></i></a> 
                               <!-- </center> -->
                             </td>
                         </tr>
@@ -97,7 +97,7 @@ DATA USERS PENGGUNA
 <div style="width: 500px; border: 2px solid blue; padding:20px;">
 <center>
       <b><font color="blue">TEKAN PRINT KUNING UNTUK CETAK ID CARD</font></b><br><br>
-      <button type="submit" class="btn btn-warning" id="btn-kirim"><i class="fa fa-print"></i>PRINT</button>
+      <button type="submit" target="_blank" class="btn btn-warning" id="btn-kirim"><i class="fa fa-print"></i>PRINT</button>
 </form>
 </center>
         </div>
@@ -138,7 +138,7 @@ DATA USERS PENGGUNA
                  
                   <img src="data:image/png;base64,{{DNS1D::getBarcodePNG('4445645656', 'I25+')}}" alt="barcode" />
                   <br>
-                  <span id="barcodeuser" style="font-weight: bold"></span>
+                  <span id="barcodeuser3" style="font-weight: bold"></span>
                   </center> 
                   </div>
                   <div class="modal-footer justify-content-between">
@@ -254,7 +254,7 @@ DATA USERS PENGGUNA
             <div class="modal-footer justify-content-between">
               <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
               <button type="submit" class="btn btn-primary">
-                {{ __('Register') }}
+                {{ __('Save') }}
               </button>
               </form>
             </div>
@@ -281,12 +281,12 @@ DATA USERS PENGGUNA
                 <div class="card-body">
 
                 <div class="form-group">
-                  <label for="nama">{{ __('Full Name') }}</label>
+                  <label for="nama2">{{ __('Full Name') }}</label>
                   <div class="input-group mb-3">
                     <div class="input-group-prepend">
                       <span class="input-group-text"><i class="fas fa-user"></i></span>
                     </div>
-                    <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" placeholder="{{ __('Full Name') }}" required autocomplete="name" autofocus>
+                    <input id="name2" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" placeholder="{{ __('Full Name') }}" required autocomplete="name" autofocus>
                   </div>
                     @error('name')
                       <span class="invalid-feedback" role="alert">
@@ -296,12 +296,12 @@ DATA USERS PENGGUNA
                 </div>
 
                 <div class="form-group">
-                  <label for="nik">{{ __('NIK') }}</label>
+                  <label for="nik2">{{ __('NIK') }}</label>
                   <div class="input-group mb-3">
                     <div class="input-group-prepend">
                       <span class="input-group-text"><i class="fas fa-id-card"></i></span>
                     </div>
-                    <input id="nik" type="number" class="form-control @error('nik') is-invalid @enderror" name="nik" value="{{ old('nik') }}" placeholder="Nomer Induk Karyawan" autocomplete="nik" autofocus>
+                    <input id="nik2" type="number" class="form-control @error('nik') is-invalid @enderror" name="nik" value="{{ old('nik') }}" placeholder="Nomer Induk Karyawan" autocomplete="nik" autofocus>
                   </div>
                     @error('nik')
                       <span class="invalid-feedback" role="alert">
@@ -311,12 +311,12 @@ DATA USERS PENGGUNA
                 </div>
 
                 <div class="form-group">
-                  <label for="email">{{ __('Email Address') }}</label>
+                  <label for="email2">{{ __('Email Address') }}</label>
                   <div class="input-group mb-3">
                     <div class="input-group-prepend">
                       <span class="input-group-text"><i class="fas fa-envelope"></i></span>
                     </div>
-                    <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" placeholder="{{ __('Email Address') }}" required autocomplete="email">
+                    <input id="email2" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" placeholder="{{ __('Email Address') }}" required autocomplete="email">
                   </div>
                         @error('email')
                           <span class="invalid-feedback" role="alert">
@@ -351,12 +351,12 @@ DATA USERS PENGGUNA
                   </div>
 
                 <div class="form-group">
-                  <label for="level">{{ __('Level') }}</label>
+                  <label for="level2">{{ __('Level') }}</label>
                   <div class="input-group mb-3">
                     <div class="input-group-prepend">
                       <span class="input-group-text"><i class="fas fa-list"></i></span>
                     </div>
-                      <select id="level" name="level" class="form-control @error('level') is-invalid @enderror">
+                      <select id="level2" name="level" class="form-control @error('level') is-invalid @enderror">
                         <option value="">== Pilih Level ==</option>
                         <option value="administrator" @if (old('level') == 'administrator') selected @endif >Adminstrator</option>
                         <option value="adm mekanik" @if (old('level') == 'adm mekanik') selected @endif >Adm Mekanik</option>
@@ -372,7 +372,7 @@ DATA USERS PENGGUNA
                       @enderror
                 </div>
                 
-                <input id="barcodeuser" type="hidden" class="form-control @error('barcode_user') is-invalid @enderror" name="barcode_user" value="{{ old('barcodeuser') }}" placeholder="Barcode User" autocomplete="barcodeuser" autofocus>
+                <input id="barcodeuser2" type="hidden" class="form-control @error('barcode_user') is-invalid @enderror" name="barcode_user" value="{{ old('barcodeuser') }}" placeholder="Barcode User" autocomplete="barcodeuser" autofocus>
                   
                 <div class="form-group">
                   <label for="photo">File Photo</label>
@@ -415,21 +415,9 @@ DATA USERS PENGGUNA
 <script src="{{ asset('/adminlte/plugins/datatables-buttons/js/buttons.colVis.min.js') }}"></script>
 
 <script>
-  $(function () {
-    $("#example1").DataTable({
-      "responsive": true, "lengthChange": false, "autoWidth": false,
-      "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
-    }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
-    $('#example2').DataTable({
-      "paging": true,
-      "lengthChange": false,
-      "searching": false,
-      "ordering": true,
-      "info": true,
-      "autoWidth": false,
-      "responsive": true,
-    });
-  });
+ $(document).ready( function () {
+    $('#example1').DataTable();
+} );
 </script>
 
 <script type="text/javascript">
@@ -448,6 +436,25 @@ DATA USERS PENGGUNA
     var namepotbes = namepot.toUpperCase();
     var gabungan = namepotbes.concat(nik);
     $('#barcodeuser').val(gabungan);
+    })
+ </script>   
+
+<script type="text/javascript">
+  $('#name2').keyup(function(){ 
+    var name = $("#name2").val();
+    var nik = $("#nik2").val();
+    var namepot = name.substring(0, 2);
+    var namepotbes = namepot.toUpperCase();
+    var gabungan = namepotbes.concat(nik);
+    $('#barcodeuser2').val(gabungan);
+    })
+    $('#nik2').keyup(function(){ 
+    var name = $("#name2").val();
+    var nik = $("#nik2").val();
+    var namepot = name.substring(0, 2);
+    var namepotbes = namepot.toUpperCase();
+    var gabungan = namepotbes.concat(nik);
+    $('#barcodeuser2').val(gabungan);
     })
  </script>   
  
@@ -472,7 +479,7 @@ $('body').on('click', '.edit', function (event) {
 
 <script>
 $(document).ready(function () {
-$('body').on('click', '#show', function (event) {
+$('body').on('click', '.tampil', function (event) {
     event.preventDefault();
     var id = $(this).data('id');
     console.log(id)
@@ -485,7 +492,7 @@ $('body').on('click', '#show', function (event) {
          $('#tampilnama').html(namabesar);
          $('#tampilnik').html(data.data.nik);
          $('#tampillevel').html(levelbesar);
-         $('#barcodeuser').html(data.data.barcode_user);
+         $('#barcodeuser3').html(data.data.barcode_user);
          console.log("/img/users/"+data.data.photo)
          $("#tampilphoto").attr("src","/img/users/"+data.data.photo);
          $("#printidcard").attr("href","/users/"+data.data.id);

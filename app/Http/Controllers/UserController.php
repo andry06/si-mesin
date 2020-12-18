@@ -62,23 +62,33 @@ class UserController extends Controller
             'email' => 'required|unique:users|email|string',
             'password' => 'required|string|min:8|confirmed',
             'level' => 'required',
+            'barcode_user' => 'required',
             'photo' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048'
         ]);
 
-        $photo = date('d-m-Y').'_'.date('h_i_s').'_'.$request['name'].'.'.$request->photo->extension(); 
-
-        $user = User::create([
-            'name' => $request['name'],
-            'nik' => $request['nik'],
-            'email' => $request['email'],
-            'password' => Hash::make($request['password']),
-            'level' => $request['level'],
-            'barcode_user' => $request['barcode_user'],
-            'photo' => $photo
-        ]);
-
-        $request->photo->move(public_path('img/users'), $photo);
         
+        if(empty($request['photo'])){    
+            $user = User::create([
+                'name' => $request['name'],
+                'nik' => $request['nik'],
+                'email' => $request['email'],
+                'password' => Hash::make($request['password']),
+                'level' => $request['level'],
+                'barcode_user' => $request['barcode_user'],
+            ]);
+        }else{
+        $photo = date('d-m-Y').'_'.date('h_i_s').'_'.$request['name'].'.'.$request->photo->extension(); 
+            $user = User::create([
+                'name' => $request['name'],
+                'nik' => $request['nik'],
+                'email' => $request['email'],
+                'password' => Hash::make($request['password']),
+                'level' => $request['level'],
+                'barcode_user' => $request['barcode_user'],
+                'photo' => $photo
+            ]);
+        $request->photo->move(public_path('img/users'), $photo);
+        }
 
         Alert::success('Berhasil', 'Berhasil Menambahkan User');
         return redirect('/users');    
@@ -86,10 +96,11 @@ class UserController extends Controller
 
     public function print(Request $request)
     {
-        $id = $request->id; // Ambil data NIS yang dikirim oleh index.php melalui form submit
+        $perusahaan = Perusahaan::find(1)->get();
+        $id = $request->id; 
         $data = implode(",", $id);
         $users = DB::select("select * from users where id in ($data)");
-        return view('users.print', compact('users'));
+        return view('users.print', compact('users', 'perusahaan'));
     }
 
     /**

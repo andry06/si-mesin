@@ -36,7 +36,7 @@
                 <h3 class="card-title">Daftar Jenis Mesin</h3>
               </div>
               <!-- /.card-header -->
-              <div class="card-body table-responsive p-0" style="margin-top: 14px">
+              <div class="card-body table-responsive p-3" style="margin-top: 14px">
               <!-- <div class="card-body"> -->
                 <table id="example2" class="table table-hover text-nowrap table-striped">
                   <thead class="thead-info"> 
@@ -129,17 +129,9 @@
 <script src="{{ asset('/adminlte/plugins/datatables-buttons/js/buttons.colVis.min.js') }}"></script> -->
 
 <script>
-  $(function () {
-    $('#example2').DataTable({
-      "paging": true,
-      "lengthChange": false,
-      "searching": true,
-      "ordering": true,
-      "info": true,
-      "autoWidth": false,
-      "responsive": true,
-    });
-  });
+ $(document).ready( function () {
+    $('#example2').DataTable();
+} );
 </script>
 
 

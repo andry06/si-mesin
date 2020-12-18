@@ -1,40 +1,40 @@
-<table id="example1" class="table table-hover text-nowrap table-striped table-bordered">
-                  <thead class="thead-info"> 
-                    <tr>
-                      <th width="5px"><input type="checkbox" id="check-all"></th>
-                      <th scope="col" style="width: 10px">No</th>
-                      <th scope="col" class="text-center">Nama</th>
-                      <th scope="col" class="text-center">NIK</th>
-                      <th scope="col" class="text-center">Email</th>
-                      <th scope="col" class="text-center">Level</th>
-                      <th scope="col" class="text-center">Action</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                  <?php 
-                    $no = 0
-                    ?>
-                    @forelse($users as $key => $user)
-                        <tr>
-                            <td class="text-center"><input type="checkbox" class="check-item" name="id[]" value="{{ $user->id }}"></td>
-                            <td> {{  $no+=1 }}</td>
-                            <td class="text-center" > {{ strtoupper($user->name) }}</td>
-                            <td class="text-center" > {{ strtoupper($user->nik) }}</td>
-                            <td class="text-center" > {{ strtolower($user->email) }}</td>
-                            <td class="text-center" > {{ strtoupper($user->level) }}</td>
-                            <td style="width:10px; padding-top:6px; padding-bottom: 0px;" >
-                                <!-- <center> -->
-                                <!-- <button type="button" id="edit" data-toggle="modal" data-target="#myEdit" class="btn btn-success edit_komentar kecil" ><i class="fa fa-edit"></i></button> -->
-                                <a data-id="{{ $user->id }}" data-toggle="modal" data-target="#myEdit" class="edit btn btn-sm btn-success"><i class="fa fa-edit"></i></a>  
-                              |  <a data-id="{{ $user->id }}" id="show" data-toggle="modal" data-target="#myShow" class="btn btn-sm btn-primary"><i class="fa fa-eye"></i></a> 
-                              |  <a href="/users/hapus/{{ $user->id }}" class="btn btn-sm btn-danger"><i class="fa fa-trash"></i></a> 
-                              <!-- </center> -->
-                            </td>
-                        </tr>
-                    @empty
-                       <tr>
-                            <td colspan="5" align="center">No Post</td>
-                       </tr>  
-                    @endforelse
-                  </tbody>
-                </table>
+  <!-- Google Font: Source Sans Pro -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href=" {{ asset('/adminlte/plugins/fontawesome-free/css/all.min.css') }}">
+  <!-- Theme style -->
+  <link rel="stylesheet" href="{{ asset('/adminlte/dist/css/adminlte.min.css') }}">
+<div class="row">
+@foreach($users as $key => $user)
+
+<div class="col-sm-4">                
+  <div class="card text-center" style="width: 85mm; height: 125mm; border: 1px solid black;">
+    <div class="card-header bg-info">
+      <h5>
+        @foreach($perusahaan as $key => $pt)
+          {{ $pt->nama_perusahaan }}
+        @endforeach
+      </h5>
+      <span id="tampillevel" style="font-weight: bold">{{ strtoupper($user->level) }}</span>
+    </div>
+    <div class="card-body" >
+      <img id="tampilphoto" src="/img/users/{{ $user->photo }}" width="180px" height="300px" style="margin-bottom: 20px" class="img-thumbnail" alt="...">
+      <br>
+      <span id="tampilnama" style="font-weight: bold;" >{{ $user->name }}</span>
+      <!-- <span id="tampilnik" style="font-weight: bold">NIK. {{ $user->nik }}</span> -->
+    </div>
+    <table style="border-top: 1px solid black; ">
+      <tr>
+          <td>
+            <center>
+            <img style="margin-bottom: 10px; padding-top: 10px " src="data:image/png;base64,{{DNS1D::getBarcodePNG($user->barcode_user, 'C128A')}}" alt="barcode" width="180px" height="40px" />
+            <div id="barcodeuser3" style="font-weight: bold; margin-bottom: 10px">NIK. {{ $user->barcode_user }}</div>
+            </center>
+          </td>      
+      </tr>
+    </table> 
+    </div>
+    </div>
+    
+@endforeach    
+</div>
