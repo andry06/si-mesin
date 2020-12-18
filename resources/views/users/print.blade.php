@@ -4,6 +4,7 @@
   <link rel="stylesheet" href=" {{ asset('/adminlte/plugins/fontawesome-free/css/all.min.css') }}">
   <!-- Theme style -->
   <link rel="stylesheet" href="{{ asset('/adminlte/dist/css/adminlte.min.css') }}">
+  <title>Cetak ID CARD</title>
 <div class="row">
 @foreach($users as $key => $user)
 
@@ -20,7 +21,7 @@
     <div class="card-body" >
       <img id="tampilphoto" src="/img/users/{{ $user->photo }}" width="180px" height="300px" style="margin-bottom: 20px" class="img-thumbnail" alt="...">
       <br>
-      <span id="tampilnama" style="font-weight: bold;" >{{ $user->name }}</span>
+      <span id="tampilnama" style="font-weight: bold;" >{{ strtoupper($user->name) }}</span>
       <!-- <span id="tampilnik" style="font-weight: bold">NIK. {{ $user->nik }}</span> -->
     </div>
     <table style="border-top: 1px solid black; ">

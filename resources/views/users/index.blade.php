@@ -8,6 +8,7 @@ DATA USERS PENGGUNA
   <link rel="stylesheet" href="{{ asset('/adminlte/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css') }}">
   <link rel="stylesheet" href="{{ asset('/adminlte/plugins/datatables-responsive/css/responsive.bootstrap4.min.css') }}">
   <link rel="stylesheet" href="{{ asset('/adminlte/plugins/datatables-buttons/css/buttons.bootstrap4.min.css') }}">
+  <link rel="stylesheet" href="{{ asset('/adminlte/plugins/sweetalert2/sweetalert2.min.css/') }}">
 @endpush
 
 @section('header-content')
@@ -37,6 +38,32 @@ DATA USERS PENGGUNA
 
 @section('content')
 <div class="row">
+
+
+@error('name')
+  <?php Alert::error('Problem Name', $message); ?>
+@enderror
+
+@error('nik')
+  <?php Alert::error('Problem NIK', $message); ?>
+@enderror
+
+@error('email')
+    <?php Alert::error('Problem E-mail', $message); ?>
+@enderror
+
+@error('password')
+    <?php Alert::error('Problem Password', $message); ?>
+@enderror
+
+@error('level')
+    <?php Alert::error('Problem Level', $message); ?>
+@enderror
+
+@error('barcode_user')
+    <?php Alert::error('Barcode User', $message); ?>
+@enderror
+
 <div class="col-md-12">
     <div class="row">
           <div class="col-12">
@@ -47,7 +74,7 @@ DATA USERS PENGGUNA
               <!-- /.card-header -->
               <div class="card-body table-responsive p-3" >
               <!-- <div class="card-body"> -->
-              <form method="post" action="/users/print" id="form-kirim">
+              <form method="post" target="_blank" action="/users/print" id="form-kirim">
               @csrf
               
                 <table id="example1"  class="table table-hover text-nowrap table-striped table-bordered">
@@ -79,7 +106,7 @@ DATA USERS PENGGUNA
                                 <!-- <button type="button" id="edit" data-toggle="modal" data-target="#myEdit" class="btn btn-success edit_komentar kecil" ><i class="fa fa-edit"></i></button> -->
                                 <a data-id="{{ $user->id }}" data-toggle="modal" data-target="#myEdit" class="edit btn btn-sm btn-success"><i class="fa fa-edit"></i></a>  
                               |  <a data-id="{{ $user->id }}" data-toggle="modal" data-target="#myShow" class="tampil btn btn-sm btn-primary"><i class="fa fa-eye"></i></a> 
-                              |  <a href="/users/hapus/{{ $user->id }}" type="button" class="btn btn-sm btn-danger"><i class="fa fa-trash"></i></a> 
+                              |  <a href="/users/hapus/{{ $user->id }}" class="tombol-hapus btn btn-sm btn-danger"><i class="fa fa-trash"></i></a> 
                               <!-- </center> -->
                             </td>
                         </tr>
@@ -94,13 +121,13 @@ DATA USERS PENGGUNA
               <!-- /.card-body -->
             </div>
             <!-- /.card -->
-<div style="width: 500px; border: 2px solid blue; padding:20px;">
-<center>
-      <b><font color="blue">TEKAN PRINT KUNING UNTUK CETAK ID CARD</font></b><br><br>
-      <button type="submit" target="_blank" class="btn btn-warning" id="btn-kirim"><i class="fa fa-print"></i>PRINT</button>
-</form>
-</center>
-        </div>
+      <center>
+          <div style="width: 500px; border: 2px solid blue; padding:20px;">
+          <b><font color="blue">TEKAN PRINT KUNING UNTUK CETAK ID CARD</font></b><br><br>
+          <button type="submit" class="btn btn-warning" id="btn-kirim"><i class="fa fa-print"></i>PRINT</button>
+          </form>
+          </div>
+      </center>
     </div>
     </div>
     </div>
@@ -179,11 +206,6 @@ DATA USERS PENGGUNA
                     </div>
                     <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" placeholder="{{ __('Full Name') }}" required autocomplete="name" autofocus>
                   </div>
-                    @error('name')
-                      <span class="invalid-feedback" role="alert">
-                        <strong>{{ $message }}</strong>
-                      </span>
-                    @enderror
                 </div>
 
                 <div class="form-group">
@@ -194,11 +216,6 @@ DATA USERS PENGGUNA
                     </div>
                     <input id="nik" type="number" class="form-control @error('nik') is-invalid @enderror" name="nik" value="{{ old('nik') }}" placeholder="Nomer Induk Karyawan" autocomplete="nik" autofocus>
                   </div>
-                    @error('nik')
-                      <span class="invalid-feedback" role="alert">
-                        <strong>{{ $message }}</strong>
-                      </span>
-                    @enderror
                 </div>
 
                 <div class="form-group">
@@ -209,11 +226,6 @@ DATA USERS PENGGUNA
                     </div>
                     <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" placeholder="{{ __('Email Address') }}" required autocomplete="email">
                   </div>
-                        @error('email')
-                          <span class="invalid-feedback" role="alert">
-                            <strong>{{ $message }}</strong>
-                          </span>
-                        @enderror
                   </div>
 
       
@@ -232,11 +244,6 @@ DATA USERS PENGGUNA
                         <option value="security" @if (old('level') == 'sucurity') selected @endif>Security</option>
                       </select>
                   </div>
-                      @error('level')
-                        <span class="invalid-feedback" role="alert">
-                          <strong>{{ $message }}</strong>
-                        </span>
-                      @enderror
                 </div>
                 
                 <input id="barcodeuser" type="hidden" class="form-control @error('barcode_user') is-invalid @enderror" name="barcode_user" value="{{ old('barcodeuser') }}" placeholder="Barcode User" autocomplete="barcodeuser" autofocus>
@@ -288,11 +295,6 @@ DATA USERS PENGGUNA
                     </div>
                     <input id="name2" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" placeholder="{{ __('Full Name') }}" required autocomplete="name" autofocus>
                   </div>
-                    @error('name')
-                      <span class="invalid-feedback" role="alert">
-                        <strong>{{ $message }}</strong>
-                      </span>
-                    @enderror
                 </div>
 
                 <div class="form-group">
@@ -303,11 +305,6 @@ DATA USERS PENGGUNA
                     </div>
                     <input id="nik2" type="number" class="form-control @error('nik') is-invalid @enderror" name="nik" value="{{ old('nik') }}" placeholder="Nomer Induk Karyawan" autocomplete="nik" autofocus>
                   </div>
-                    @error('nik')
-                      <span class="invalid-feedback" role="alert">
-                        <strong>{{ $message }}</strong>
-                      </span>
-                    @enderror
                 </div>
 
                 <div class="form-group">
@@ -318,11 +315,7 @@ DATA USERS PENGGUNA
                     </div>
                     <input id="email2" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" placeholder="{{ __('Email Address') }}" required autocomplete="email">
                   </div>
-                        @error('email')
-                          <span class="invalid-feedback" role="alert">
-                            <strong>{{ $message }}</strong>
-                          </span>
-                        @enderror
+                        
                   </div>
 
                 <div class="form-group">
@@ -365,11 +358,6 @@ DATA USERS PENGGUNA
                         <option value="security" @if (old('level') == 'sucurity') selected @endif>Security</option>
                       </select>
                   </div>
-                      @error('level')
-                        <span class="invalid-feedback" role="alert">
-                          <strong>{{ $message }}</strong>
-                        </span>
-                      @enderror
                 </div>
                 
                 <input id="barcodeuser2" type="hidden" class="form-control @error('barcode_user') is-invalid @enderror" name="barcode_user" value="{{ old('barcodeuser') }}" placeholder="Barcode User" autocomplete="barcodeuser" autofocus>
@@ -413,6 +401,7 @@ DATA USERS PENGGUNA
 <script src="{{ asset('/adminlte/plugins/datatables-buttons/js/buttons.html5.min.js') }}"></script>
 <script src="{{ asset('/adminlte/plugins/datatables-buttons/js/buttons.print.min.js') }}"></script>
 <script src="{{ asset('/adminlte/plugins/datatables-buttons/js/buttons.colVis.min.js') }}"></script>
+<script src="{{ asset('/adminlte/plugins/sweetalert2/sweetalert2.min.js') }}"></script>
 
 <script>
  $(document).ready( function () {
@@ -511,4 +500,28 @@ $('body').on('click', '.tampil', function (event) {
     });
   });
  </script>   
+
+ <!-- fungsi SweetAlert -->
+    <script>
+      $(document).ready(function(){
+        $('.tombol-hapus').on('click', function (e){
+          e.preventDefault();
+          var href =  $(this).attr('href');
+          console.log(href);
+          Swal.fire({
+              title: 'Apakah Yakin Ingin Menghapus?',
+              text: "Data User Ini!",
+              icon: 'warning',
+              showCancelButton: true,
+              confirmButtonColor: '#3085d6',
+              cancelButtonColor: '#d33',
+              confirmButtonText: 'Yes, delete it!'
+            }).then((result) => {
+              if (result.isConfirmed) {
+                document.location.href = href;
+              }
+            })
+          })
+      })
+    </script>
 @endpush

@@ -189,8 +189,7 @@ class UserController extends Controller
     {
         // menghapus data pegawai berdasarkan id yang dipilih
         $user = User::destroy($id);
-            
-       
-        return redirect('/users')->with('success', 'Berhasil hapus data');;
+        Alert::success('Berhasil', 'Berhasil Menghapus User');
+        return redirect('/users');
     }
 }
