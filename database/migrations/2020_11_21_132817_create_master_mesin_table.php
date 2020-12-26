@@ -22,7 +22,9 @@ class CreateMasterMesinTable extends Migration
             $table->string('no_seri', 45)->nullable();
             $table->string('photo', 255)->nullable();
             $table->integer('qty');
+            $table->unsignedBigInteger('createduser_id');
             $table->timestamps();
+            $table->foreign('createduser_id')->references('id')->on('users')->onDelete('restrict')->onUpdate('cascade');
             $table->foreign('jenismesin_id')->references('id')->on('jenis_mesin')->onDelete('restrict')->onUpdate('cascade');
             $table->foreign('merkmesin_id')->references('id')->on('merk_mesin')->onDelete('restrict')->onUpdate('cascade');
         });

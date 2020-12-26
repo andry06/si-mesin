@@ -6,6 +6,10 @@
   <link rel="stylesheet" href="{{ asset('/adminlte/plugins/datatables-buttons/css/buttons.bootstrap4.min.css') }}">
 @endpush
 
+@section('tittle')
+DATA JENIS MESIN
+@endsection
+
 @section('header-content')
 <section class="content-header">
       <div class="container-fluid">
@@ -43,6 +47,7 @@
                     <tr>
                       <th scope="col" style="width: 10px">No</th>
                       <th scope="col" class="text-center">Jenis Mesin</th>
+                      <th scope="col" class="text-center">Singkatan</th>
                       <th scope="col" class="text-center">Action</th>
                     </tr>
                   </thead>
@@ -54,6 +59,7 @@
                         <tr>
                             <td> {{  $no+=1 }}</td>
                             <td class="text-center" > {{ strtoupper($jm->jenis_mesin) }}</td>
+                            <td class="text-center" > {{ strtoupper($jm->singkatan) }}</td>
                             <td style="width:10px; padding-top:6px; padding-bottom: 0px;" >
                                 <!-- <center> -->
                               <a href="/jenismesin/{{ $jm->id }}/edit" class="btn btn-sm btn-success">Edit</a> | 
@@ -96,6 +102,13 @@
                 <div class="form-group">
                     <label for="jenis_mesin">Jenis Mesin</label>
                     <input name="jenis_mesin" class="form-control" id="jenis_mesin" value=" {{ old('jenis_mesin', '')}}"  placeholder="Masukkan Jenis Mesin">
+                </div>
+                @error('jenis_mesin')
+                    <div class="alert alert-danger">{{ $message }}</div>
+                @enderror
+                <div class="form-group">
+                    <label for="singkatan">Singkatan</label>
+                    <input name="singkatan" class="form-control" id="singkatan" value=" {{ old('singkatan', '')}}"  placeholder="Masukkan Singkatan">
                 </div>
                 @error('jenis_mesin')
                     <div class="alert alert-danger">{{ $message }}</div>

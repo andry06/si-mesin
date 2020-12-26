@@ -7,7 +7,7 @@
 @endpush
 
 @section('tittle')
-DATA JENIS MESIN
+DATA MERK MESIN
 @endsection
 
 @section('header-content')
@@ -15,7 +15,7 @@ DATA JENIS MESIN
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1>Jenis Mesin</h1>
+            <h1>Merk Mesin</h1>
           </div>
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
@@ -42,7 +42,7 @@ DATA JENIS MESIN
           <div class="col-12">
             <div class="card card-info">
               <div class="card-header">
-                <h3 class="card-title">Daftar Jenis Mesin</h3>
+                <h3 class="card-title">Daftar Merk Mesin</h3>
               </div>
               <!-- /.card-header -->
               <div class="card-body table-responsive p-0" style="margin-top: 14px">
@@ -51,8 +51,7 @@ DATA JENIS MESIN
                   <thead class="thead-info"> 
                     <tr>
                       <th scope="col" style="width: 10px">No</th>
-                      <th scope="col" class="text-center">Jenis Mesin</th>
-                      <th scope="col" class="text-center">Singkatan</th>
+                      <th scope="col" class="text-center">Merk Mesin</th>
                       <th scope="col" class="text-center">Action</th>
                     </tr>
                   </thead>
@@ -60,15 +59,14 @@ DATA JENIS MESIN
                   <?php 
                     $no = 0
                     ?>
-                    @forelse($jenismesin1 as $key => $jm)
+                    @forelse($merkmesin1 as $key => $mm)
                         <tr>
                             <td> {{  $no+=1 }}</td>
-                            <td class="text-center" > {{ strtoupper($jm->jenis_mesin) }}</td>
-                            <td class="text-center" > {{ strtoupper($jm->singkatan) }}</td>
+                            <td class="text-center" > {{ strtoupper($mm->merk_mesin) }}</td>
                             <td style="width:10px; padding-top:6px; padding-bottom: 0px;" >
                                 <!-- <center> -->
-                              <a href="/jenismesin/{{ $jm->id }}/edit" class="btn btn-sm btn-success">Edit</a> | 
-                              <form style="display: inline-block" action="/jenismesin/{{ $jm->id }}" method="POST">
+                              <a href="/merkmesin/{{ $mm->id }}/edit" class="btn btn-sm btn-success">Edit</a> | 
+                              <form style="display: inline-block" action="/merkmesin/{{ $mm->id }}" method="POST">
                                 @csrf
                                 @method('DELETE')
                                 <input style="display: inline-block" type="submit" value="Delete" class="btn btn-sm btn-danger">
@@ -97,26 +95,19 @@ DATA JENIS MESIN
        
         <div class="card card-info">
             <div class="card-header">
-                <h3 class="card-title">EDIT Data Jenis Mesin </h3>
+                <h3 class="card-title">EDIT Data Merk Mesin </h3>
             </div>
             <!-- /.card-header -->
             <!-- form start -->
-            <form role="form"  action="/jenismesin/{{ $jenismesin->id }}" method="POST">
+            <form role="form"  action="/merkmesin/{{ $merkmesin->id }}" method="POST">
             @csrf
             @method('PUT')
             <div class="card-body">
                 <div class="form-group">
-                    <label for="jenis_mesin">Jenis Mesin</label>
-                    <input name="jenis_mesin" class="form-control" id="jenis_mesin" value=" {{ old('jenis_mesin', $jenismesin->jenis_mesin)}}"  placeholder="Masukkan Jenis Mesin">
+                    <label for="merk_mesin">Merk Mesin</label>
+                    <input name="merk_mesin" class="form-control" id="merk_mesin" value=" {{ old('merk_mesin', $merkmesin->merk_mesin)}}"  placeholder="Masukkan Merk Mesin">
                 </div>
-                @error('jenis_mesin')
-                    <div class="alert alert-danger">{{ $message }}</div>
-                @enderror
-                <div class="form-group">
-                    <label for="singkatan">Singkatan</label>
-                    <input name="singkatan" class="form-control" id="singkatan" value=" {{ old('singkatan', $jenismesin->singkatan)}}"  placeholder="Tentukan Singkatannya">
-                </div>
-                @error('jenis_mesin')
+                @error('merk_mesin')
                     <div class="alert alert-danger">{{ $message }}</div>
                 @enderror
                 </div>

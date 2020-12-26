@@ -104,8 +104,9 @@ DATA USERS PENGGUNA
                             <td style="width:10px; padding-top:6px; padding-bottom: 0px;" >
                                 <!-- <center> -->
                                 <!-- <button type="button" id="edit" data-toggle="modal" data-target="#myEdit" class="btn btn-success edit_komentar kecil" ><i class="fa fa-edit"></i></button> -->
-                                <a data-id="{{ $user->id }}" data-toggle="modal" data-target="#myEdit" class="edit btn btn-sm btn-success"><i class="fa fa-edit"></i></a>  
-                              |  <a data-id="{{ $user->id }}" data-toggle="modal" data-target="#myShow" class="tampil btn btn-sm btn-primary"><i class="fa fa-eye"></i></a> 
+                                 <a data-id="{{ $user->id }}" data-toggle="modal" data-target="#myEdit" class="edit btn btn-sm btn-success"><i class="fa fa-edit"></i></a>
+                              |  <a data-id="{{ $user->id }}" data-toggle="modal" data-target="#myReset" class="reset btn btn-sm btn-primary"><i class="fa fa-window-restore"></i></a>   
+                              |  <a data-id="{{ $user->id }}" data-toggle="modal" data-target="#myShow" class="tampil btn btn-sm btn-warning"><i class="fa fa-eye"></i></a> 
                               |  <a href="/users/hapus/{{ $user->id }}" class="tombol-hapus btn btn-sm btn-danger"><i class="fa fa-trash"></i></a> 
                               <!-- </center> -->
                             </td>
@@ -179,9 +180,60 @@ DATA USERS PENGGUNA
     </div>
 </div>
 </div>
-<!-- Modal Edit data kelas-->
+<!-- Modal tampil data -->
+
 
 <!-- Modal Edit Data data kelas-->
+<div id="myReset" class="modal fade" tabindex="-1" role="dialog">
+<div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header bg-info">
+              <h4 class="modal-title">RESET PASSWORD USER</h4>
+              
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+              <div class="modal-body">
+              <form method="POST" role="form"  id="resetform" enctype="multipart/form-data">
+                @csrf
+                <div class="card-body">
+                <div class="form-group">
+                  <label for="password">{{ __('Password') }}</label>
+                  <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text"><i class="fas fa-key"></i></span>
+                    </div>
+                    <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" placeholder="{{ __('Password') }}" required autocomplete="new-password">
+                  </div>
+                  </div>
+
+                <div class="form-group">
+                  <label for="password-confirm">{{ __('Password Confirm') }}</label>
+                  <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text"><i class="fas fa-key"></i></span>
+                    </div>
+                    <input id="password-confirm" type="password" class="form-control" name="password_confirmation" placeholder="{{ __('Password Confirm') }}" required autocomplete="new-password">
+                  </div>
+                  
+                  </div>
+            </div>
+            <div class="modal-footer justify-content-between">
+              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+              <button type="submit" class="btn btn-primary">
+                {{ __('Save') }}
+              </button>
+              </form>
+            </div>
+          </div>
+        </div>
+    </div>
+</div>
+</div>
+<!-- Modal Edit data kelas-->
+
+<!-- Modal Edit Data data -->
 <div id="myEdit" class="modal fade" tabindex="-1" role="dialog">
 <div class="modal-dialog">
           <div class="modal-content">
@@ -326,11 +378,6 @@ DATA USERS PENGGUNA
                     </div>
                     <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" placeholder="{{ __('Password') }}" required autocomplete="new-password">
                   </div>
-                      @error('password')
-                        <span class="invalid-feedback" role="alert">
-                          <strong>{{ $message }}</strong>
-                        </span>
-                      @enderror
                   </div>
 
                 <div class="form-group">
@@ -371,6 +418,55 @@ DATA USERS PENGGUNA
                     </div>
                   </div>
                 </div>
+            </div>
+            <div class="modal-footer justify-content-between">
+              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+              <button type="submit" class="btn btn-primary">
+                {{ __('Register') }}
+              </button>
+              </form>
+            </div>
+          </div>
+          <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+      </div>
+      <!-- /.modal -->
+
+      <!-- ===================================== // MODAL TAMBAH // ===================================== -->
+<div class="modal fade" id="modal-default" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header bg-info">
+              <h4 class="modal-title">TAMBAH DATA USER</h4>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <form method="POST" role="form"  action="/users/reset" enctype="multipart/form-data">
+                @csrf
+                <div class="card-body">
+                <div class="form-group">
+                  <label for="password">{{ __('Password') }}</label>
+                  <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text"><i class="fas fa-key"></i></span>
+                    </div>
+                    <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" placeholder="{{ __('Password') }}" required autocomplete="new-password">
+                  </div>
+                  </div>
+
+                <div class="form-group">
+                  <label for="password-confirm">{{ __('Password Confirm') }}</label>
+                  <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text"><i class="fas fa-key"></i></span>
+                    </div>
+                    <input id="password-confirm" type="password" class="form-control" name="password_confirmation" placeholder="{{ __('Password Confirm') }}" required autocomplete="new-password">
+                  </div>
+                  </div>
+
             </div>
             <div class="modal-footer justify-content-between">
               <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -471,7 +567,6 @@ $(document).ready(function () {
 $('body').on('click', '.tampil', function (event) {
     event.preventDefault();
     var id = $(this).data('id');
-    console.log(id)
     $.get('users/' + id + '/edit', function (data) {
         var nama = data.data.name;
         var namabesar = nama.toUpperCase();
@@ -486,6 +581,17 @@ $('body').on('click', '.tampil', function (event) {
          $("#tampilphoto").attr("src","/img/users/"+data.data.photo);
          $("#printidcard").attr("href","/users/"+data.data.id);
      })
+});
+}); 
+</script>
+
+
+<script>
+$(document).ready(function () {
+$('body').on('click', '.reset', function (event) {
+    event.preventDefault();
+    var id = $(this).data('id');
+      $("#resetform").attr("action","users/reset/"+id);
 });
 }); 
 </script>

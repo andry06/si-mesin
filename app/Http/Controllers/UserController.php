@@ -192,4 +192,19 @@ class UserController extends Controller
         Alert::success('Berhasil', 'Berhasil Menghapus User');
         return redirect('/users');
     }
+
+    public function reset(Request $request, $id)
+    {
+        // menghapus reset data password berdasarkan id yang dipilih
+        $request->validate([
+            'password' => 'required|string|min:8|confirmed',
+        ]);
+
+        $update = User::where('id', $id)->update([
+            'password' => $request['password'],
+        ]);
+
+        Alert::success('Berhasil', 'Berhasil Mereset Password User');
+        return redirect('/users');    
+    }
 }

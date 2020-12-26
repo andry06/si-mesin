@@ -59,7 +59,7 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a href="../charts/chartjs.html" class="nav-link">
+                <a href="/merkmesin" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Merk Mesin</p>
                 </a>

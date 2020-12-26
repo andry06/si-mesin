@@ -6,11 +6,10 @@ use Illuminate\Http\Request;
 use RealRashid\SweetAlert\Facades\Alert;
 
 use DB;
-use App\JenisMesin;
+use App\MerkMesin;
 use Auth;
 
-
-class JenisMesinController extends Controller
+class MerkMesinController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -27,12 +26,12 @@ class JenisMesinController extends Controller
 
         $this->middleware('auth');
     }
-
+    
     public function index()
     {
         $user = Auth::user();
-        $jenismesin = JenisMesin::all()->sortBy('jenis_mesin');
-        return view('jenismesin.index', compact('jenismesin'));
+        $merkmesin = MerkMesin::all()->sortBy('merk_mesin');
+        return view('merkmesin.index', compact('merkmesin'));
     }
 
     /**
@@ -42,8 +41,7 @@ class JenisMesinController extends Controller
      */
     public function create()
     {
-        // / Dengan Query Builder    
-        
+        //
     }
 
     /**
@@ -55,19 +53,16 @@ class JenisMesinController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'jenis_mesin' => 'required|max:45|unique:jenis_mesin',
-            'singkatan' => 'required|max:10|unique:jenis_mesin'
+            'merk_mesin' => 'required|max:45|unique:merk_mesin'
         ]);
         
-        $jenismesin = JenisMesin::create([
-                    'jenis_mesin' => strtolower($request['jenis_mesin']),
-                    'singkatan' => strtolower($request['singkatan']),
+        $merkmesin = MerkMesin::create([
+                    'merk_mesin' => strtolower($request['merk_mesin']),
                     'createduser_id' => Auth::user()->id
                     ]);
     
         Alert::success('Berhasil', 'Berhasil Menambahkan Data');
-        return redirect('/jenismesin');    
-        // return redirect('/jenismesin')->with('success', 'Post Berhasil Disimpan !');
+        return redirect('/merkmesin'); 
     }
 
     /**
@@ -90,10 +85,10 @@ class JenisMesinController extends Controller
     public function edit($id)
     {
         $user = Auth::user();
-        $jenismesin1 = JenisMesin::all()->sortBy('jenis_mesin');
+        $merkmesin1 = MerkMesin::all()->sortBy('merk_mesin');
 
-        $jenismesin = JenisMesin::find($id);
-        return view('jenismesin.edit', compact('jenismesin', 'jenismesin1'));
+        $merkmesin = MerkMesin::find($id);
+        return view('merkmesin.edit', compact('merkmesin', 'merkmesin1'));
     }
 
     /**
@@ -106,17 +101,15 @@ class JenisMesinController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            'jenis_mesin' => 'required|max:45',
-            'singkatan' => 'required|max:10',
+            'merk_mesin' => 'required|max:45'
         ]);
 
-        $update = JenisMesin::where('id', $id)->update([
-            'jenis_mesin' => $request['jenis_mesin'],
-            'singkatan' => $request['singkatan']
+        $update = MerkMesin::where('id', $id)->update([
+            'merk_mesin' => $request['merk_mesin']
         ]);
 
         Alert::success('Berhasil', 'Berhasil Mengedit Data');
-        return redirect('/jenismesin');
+        return redirect('/merkmesin');
     }
 
     /**
@@ -127,8 +120,6 @@ class JenisMesinController extends Controller
      */
     public function destroy($id)
     {
-        $jenismesin = JenisMesin::destroy($id);
-        Alert::success('Berhasil', 'Berhasil Menghapus Data');
-        return redirect('/jenismesin');
+        //
     }
 }
