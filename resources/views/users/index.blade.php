@@ -95,7 +95,7 @@ DATA USERS PENGGUNA
                     ?>
                     @forelse($users as $key => $user)
                         <tr>
-                            <td class="text-center"><input type="checkbox" class="check-item" name="id[]" value="{{ $user->id }}"></td>
+                            <td class="text-center"><input type="checkbox" class="check-item" name="id[]" value="{{ $user->id }}" required></td>
                             <td> {{  $no+=1 }}</td>
                             <td class="text-center" > {{ strtoupper($user->name) }}</td>
                             <td class="text-center" > {{ strtoupper($user->nik) }}</td>
@@ -118,22 +118,25 @@ DATA USERS PENGGUNA
                     @endforelse
                   </tbody>
                 </table>
+                <br>
+                <a href="/users/excel" class="btn btn-success"><i class="fa fa-file" aria-hidden="true"></i> EXPORT EXCEL</a> 
+                 | 
+                 <a href="/users/printdata" target="_blank" class="btn btn-primary"><i class="fa fa-file" aria-hidden="true"></i> PRINT DATA</a>
+                  |
+                 <button type="submit" class="btn btn-warning" id="btn-kirim"><i class="fa fa-print"></i> PRINT ID CARD</button>
+                  </form>
                 </div>
+               
               <!-- /.card-body -->
             </div>
+             
             <!-- /.card -->
-      <center>
-          <div style="width: 500px; border: 2px solid blue; padding:20px;">
-          <b><font color="blue">TEKAN PRINT KUNING UNTUK CETAK ID CARD</font></b><br><br>
-          <button type="submit" class="btn btn-warning" id="btn-kirim"><i class="fa fa-print"></i>PRINT</button>
-          </form>
-          </div>
-      </center>
+     
     </div>
     </div>
     </div>
 
-<!-- Modal Show Data data kelas-->
+<!-- Modal Show Data data-->
 <div id="myShow" class="modal fade" tabindex="-1" role="dialog">
 <div class="modal-dialog">
           <div class="modal-content">
@@ -171,7 +174,7 @@ DATA USERS PENGGUNA
                   </div>
                   <div class="modal-footer justify-content-between">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    <a id="printidcard" class="btn btn-sm btn-warning"><i class="fa fa-print"></i> PRINT</a>
+                    <!-- <a id="printidcard" class="btn btn-sm btn-warning"><i class="fa fa-print"></i> PRINT</a> -->
                 </div>
                 </div>
             </div>
@@ -183,7 +186,7 @@ DATA USERS PENGGUNA
 <!-- Modal tampil data -->
 
 
-<!-- Modal Edit Data data kelas-->
+<!-- Modal reset Data -->
 <div id="myReset" class="modal fade" tabindex="-1" role="dialog">
 <div class="modal-dialog">
           <div class="modal-content">
@@ -231,7 +234,7 @@ DATA USERS PENGGUNA
     </div>
 </div>
 </div>
-<!-- Modal Edit data kelas-->
+<!-- Modal Reset data -->
 
 <!-- Modal Edit Data data -->
 <div id="myEdit" class="modal fade" tabindex="-1" role="dialog">
@@ -293,7 +296,7 @@ DATA USERS PENGGUNA
                         <option value="adm mekanik" @if (old('level') == 'adm mekanik') selected @endif >Adm Mekanik</option>
                         <option value="mekanik" @if (old('level') == 'mekanik') selected @endif>Mekanik</option>
                         <option value="supervisor" @if (old('level') == 'supervisor') selected @endif>Supervisor</option>
-                        <option value="security" @if (old('level') == 'sucurity') selected @endif>Security</option>
+                        <option value="security" @if (old('level') == 'security') selected @endif>Security</option>
                       </select>
                   </div>
                 </div>
@@ -322,7 +325,7 @@ DATA USERS PENGGUNA
     </div>
 </div>
 </div>
-<!-- Modal Edit data kelas-->
+<!-- Modal Edit data -->
 
 <!-- ===================================== // MODAL TAMBAH // ===================================== -->
 <div class="modal fade" id="modal-default" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -402,7 +405,7 @@ DATA USERS PENGGUNA
                         <option value="adm mekanik" @if (old('level') == 'adm mekanik') selected @endif >Adm Mekanik</option>
                         <option value="mekanik" @if (old('level') == 'mekanik') selected @endif>Mekanik</option>
                         <option value="supervisor" @if (old('level') == 'supervisor') selected @endif>Supervisor</option>
-                        <option value="security" @if (old('level') == 'sucurity') selected @endif>Security</option>
+                        <option value="security" @if (old('level') == 'security') selected @endif>Security</option>
                       </select>
                   </div>
                 </div>
@@ -433,12 +436,12 @@ DATA USERS PENGGUNA
       </div>
       <!-- /.modal -->
 
-      <!-- ===================================== // MODAL TAMBAH // ===================================== -->
+      <!-- ===================================== // MODAL RESET // ===================================== -->
 <div class="modal fade" id="modal-default" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
           <div class="modal-content">
             <div class="modal-header bg-info">
-              <h4 class="modal-title">TAMBAH DATA USER</h4>
+              <h4 class="modal-title">RESET PASSWORD USER</h4>
               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
               </button>
@@ -579,7 +582,6 @@ $('body').on('click', '.tampil', function (event) {
          $('#barcodeuser3').html(data.data.barcode_user);
          console.log("/img/users/"+data.data.photo)
          $("#tampilphoto").attr("src","/img/users/"+data.data.photo);
-         $("#printidcard").attr("href","/users/"+data.data.id);
      })
 });
 }); 
@@ -621,7 +623,7 @@ $('body').on('click', '.reset', function (event) {
               showCancelButton: true,
               confirmButtonColor: '#3085d6',
               cancelButtonColor: '#d33',
-              confirmButtonText: 'Yes, delete it!'
+              confirmButtonText: 'Ya, Hapus Ini!'
             }).then((result) => {
               if (result.isConfirmed) {
                 document.location.href = href;

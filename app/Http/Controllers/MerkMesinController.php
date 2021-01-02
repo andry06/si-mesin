@@ -53,11 +53,13 @@ class MerkMesinController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'merk_mesin' => 'required|max:45|unique:merk_mesin'
+            'merk_mesin' => 'required|max:45|unique:merk_mesin',
+            'merk_mesin' => 'required|max:10|unique:merk_mesin'
         ]);
         
         $merkmesin = MerkMesin::create([
                     'merk_mesin' => strtolower($request['merk_mesin']),
+                    'singkatan' => strtolower($request['singkatan']),
                     'createduser_id' => Auth::user()->id
                     ]);
     

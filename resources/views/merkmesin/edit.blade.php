@@ -52,6 +52,7 @@ DATA MERK MESIN
                     <tr>
                       <th scope="col" style="width: 10px">No</th>
                       <th scope="col" class="text-center">Merk Mesin</th>
+                      <th scope="col" class="text-center">Singkatan</th>
                       <th scope="col" class="text-center">Action</th>
                     </tr>
                   </thead>
@@ -63,6 +64,7 @@ DATA MERK MESIN
                         <tr>
                             <td> {{  $no+=1 }}</td>
                             <td class="text-center" > {{ strtoupper($mm->merk_mesin) }}</td>
+                            <td class="text-center" > {{ strtoupper($mm->singkatan) }}</td>
                             <td style="width:10px; padding-top:6px; padding-bottom: 0px;" >
                                 <!-- <center> -->
                               <a href="/merkmesin/{{ $mm->id }}/edit" class="btn btn-sm btn-success">Edit</a> | 
@@ -108,6 +110,13 @@ DATA MERK MESIN
                     <input name="merk_mesin" class="form-control" id="merk_mesin" value=" {{ old('merk_mesin', $merkmesin->merk_mesin)}}"  placeholder="Masukkan Merk Mesin">
                 </div>
                 @error('merk_mesin')
+                    <div class="alert alert-danger">{{ $message }}</div>
+                @enderror
+                <div class="form-group">
+                    <label for="singkatan">Singkatan</label>
+                    <input name="singkatan" class="form-control" id="singkatan" value=" {{ old('singkatan', $merkmesin->singkatan)}}"  placeholder="Tentukan Singkatannya">
+                </div>
+                @error('singkatan')
                     <div class="alert alert-danger">{{ $message }}</div>
                 @enderror
                 </div>

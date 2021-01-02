@@ -50,10 +50,16 @@ Route::get('/', function () {
 Route::post('/users/print', 'UserController@print')->name('printuser');
 Route::get('/users/hapus/{id}','UserController@hapus');
 Route::post('/users/reset/{id}','UserController@reset');
+Route::get('/users/excel', 'UserController@exportexcel');
+Route::get('/users/printdata', 'UserController@printdata');
 Route::resource('perusahaan', 'PerusahaanController');
 Route::resource('jenismesin', 'JenisMesinController');
 Route::resource('merkmesin', 'MerkMesinController');
 Route::resource('mastermesin', 'MasterMesinController');
+Route::get('/vendors/printdata', 'VendorController@printdata');
+Route::get('/vendors/hapus/{id}','VendorController@hapus');
+Route::get('/vendors/excel', 'VendorController@exportexcel');
+Route::resource('vendors', 'VendorController');
 
 
 Route::resource('users', 'UserController');

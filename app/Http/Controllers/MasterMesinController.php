@@ -2,10 +2,18 @@
 
 namespace App\Http\Controllers;
 
+use DB;
 use Illuminate\Http\Request;
+use App\MasterMesin;
+use Auth;
 
 class MasterMesinController extends Controller
 {
+
+    public function __construct(){
+        
+        $this->middleware('auth');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -13,7 +21,13 @@ class MasterMesinController extends Controller
      */
     public function index()
     {
-        //
+        $user = Auth::user();
+        $master = MasterMesin::all();
+        $jenismesin = DB::table('jenis_mesin')->select('id', 'jenis_mesin as jenismesin')->get();
+        $merkmesin = DB::table('merk_mesin')->select('*')->get();
+        $vendors = DB::select("select * from vendors order BY (nama_vendor = 'pt. fgx indonesia') DESC, nama_vendor");
+
+        return view('mastermesin.index', compact('master', 'jenismesin', 'merkmesin', 'vendors'));
     }
 
     /**

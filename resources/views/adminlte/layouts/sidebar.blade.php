@@ -1,3 +1,5 @@
+
+
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
     <a href="../../index3.html" class="brand-link">
@@ -14,7 +16,13 @@
         </div>
         <div class="info">
           <a href="#" class="d-block"> {{ Auth::user()->name }} </a>
-
+          <div>
+          <a style="font-size: 15px" class="badge badge-danger" href="{{ route('logout') }}"
+                                       onclick="event.preventDefault();
+                                                     document.getElementById('logout-form').submit();">
+                                        {{ __('LOG OUT') }}
+                                    </a>
+          </div>
         </div>
       </div>
      
@@ -59,6 +67,12 @@
                 </a>
               </li>
               <li class="nav-item">
+                <a href="/vendors" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Vendor</p>
+                </a>
+              </li>
+              <li class="nav-item">
                 <a href="/merkmesin" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Merk Mesin</p>
@@ -71,7 +85,7 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a href="../charts/inline.html" class="nav-link">
+                <a href="/mastermesin" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Data Mesin</p>
                 </a>

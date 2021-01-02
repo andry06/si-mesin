@@ -6,11 +6,12 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use RealRashid\SweetAlert\Facades\Alert;
 
-
+use Maatwebsite\Excel\Facades\Excel;
 use DB;
 use App\User;
 use Auth;
 use App\Perusahaan;
+use App\Exports\UserExport;
 
 class UserController extends Controller
 {   
@@ -136,7 +137,7 @@ class UserController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\Response 
      */
     public function update(Request $request, $id)
     {
@@ -206,5 +207,18 @@ class UserController extends Controller
 
         Alert::success('Berhasil', 'Berhasil Mereset Password User');
         return redirect('/users');    
+    }
+
+    public function exportexcel(Request $request)
+    {
+        return Excel::download(new UserExport, 'datauser.xlsx');
+        
+    }
+
+    public function printdata()
+    {
+        $perusahaan = Perusahaan::find(1)->get();
+        $users = User::all()->sortBy('name');
+        return view('users.printdata', compact('users', 'perusahaan'));
     }
 }
