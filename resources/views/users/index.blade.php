@@ -202,22 +202,22 @@ DATA USERS PENGGUNA
                 @csrf
                 <div class="card-body">
                 <div class="form-group">
-                  <label for="password">{{ __('Password') }}</label>
+                  <label for="password3">{{ __('Password') }}</label>
                   <div class="input-group mb-3">
                     <div class="input-group-prepend">
                       <span class="input-group-text"><i class="fas fa-key"></i></span>
                     </div>
-                    <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" placeholder="{{ __('Password') }}" required autocomplete="new-password">
+                    <input id="password3" type="password" class="form-control @error('password') is-invalid @enderror" name="password" placeholder="{{ __('Password') }}" required autocomplete="new-password">
                   </div>
                   </div>
 
                 <div class="form-group">
-                  <label for="password-confirm">{{ __('Password Confirm') }}</label>
+                  <label for="password-confirm3">{{ __('Password Confirm') }}</label>
                   <div class="input-group mb-3">
                     <div class="input-group-prepend">
                       <span class="input-group-text"><i class="fas fa-key"></i></span>
                     </div>
-                    <input id="password-confirm" type="password" class="form-control" name="password_confirmation" placeholder="{{ __('Password Confirm') }}" required autocomplete="new-password">
+                    <input id="password-confirm3" type="password" class="form-control" name="password_confirmation" placeholder="{{ __('Password Confirm') }}" required autocomplete="new-password">
                   </div>
                   
                   </div>
@@ -374,22 +374,22 @@ DATA USERS PENGGUNA
                   </div>
 
                 <div class="form-group">
-                  <label for="password">{{ __('Password') }}</label>
+                  <label for="password2">{{ __('Password') }}</label>
                   <div class="input-group mb-3">
                     <div class="input-group-prepend">
                       <span class="input-group-text"><i class="fas fa-key"></i></span>
                     </div>
-                    <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" placeholder="{{ __('Password') }}" required autocomplete="new-password">
+                    <input id="password2" type="password" class="form-control @error('password') is-invalid @enderror" name="password" placeholder="{{ __('Password') }}" required autocomplete="new-password">
                   </div>
                   </div>
 
                 <div class="form-group">
-                  <label for="password-confirm">{{ __('Password Confirm') }}</label>
+                  <label for="password-confirm2">{{ __('Password Confirm') }}</label>
                   <div class="input-group mb-3">
                     <div class="input-group-prepend">
                       <span class="input-group-text"><i class="fas fa-key"></i></span>
                     </div>
-                    <input id="password-confirm" type="password" class="form-control" name="password_confirmation" placeholder="{{ __('Password Confirm') }}" required autocomplete="new-password">
+                    <input id="password-confirm2" type="password" class="form-control" name="password_confirmation" placeholder="{{ __('Password Confirm') }}" required autocomplete="new-password">
                   </div>
                   </div>
 
@@ -413,11 +413,11 @@ DATA USERS PENGGUNA
                 <input id="barcodeuser2" type="hidden" class="form-control @error('barcode_user') is-invalid @enderror" name="barcode_user" value="{{ old('barcodeuser') }}" placeholder="Barcode User" autocomplete="barcodeuser" autofocus>
                   
                 <div class="form-group">
-                  <label for="photo">File Photo</label>
+                  <label for="formFileSm2">File Photo</label>
                   <div class="input-group">
                     <div class="custom-file">
                     <!-- <label for="formFileSm" class="form-label">Small file input example</label> -->
-                    <input class="form-control form-control" name="photo" id="formFileSm" type="file">
+                    <input class="form-control form-control" name="photo" id="formFileSm2" type="file">
                     </div>
                   </div>
                 </div>

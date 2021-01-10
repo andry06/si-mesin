@@ -32,6 +32,10 @@ DATA VENDOR
 
 @section('content')
 
+@error('vendor_number')
+  <?php Alert::error('Problem Vendor Number', $message); ?>
+@enderror
+
 @error('nama_vendor')
   <?php Alert::error('Problem Nama Vendor', $message); ?>
 @enderror
@@ -55,7 +59,7 @@ DATA VENDOR
               <!-- /.card-header -->
               <div class="card-body table-responsive p-3" >
               <center>
-                <button type="button" class="btn btn-success" data-toggle="modal" data-target="#modal-default">
+                <button type="button" class="btn btn-success" id="tambah" data-toggle="modal" data-target="#modal-default">
                   Tambah Data
                 </button>
               </center>
@@ -65,6 +69,7 @@ DATA VENDOR
                     <tr>
                       <th scope="col" style="width: 10px">No</th>
                       <th scope="col" class="text-center">Nama Vendor</th>
+                      <th scope="col" class="text-center">Vendor Number</th>
                       <th scope="col" class="text-center">Alamat</th>
                       <th scope="col" class="text-center">Negara</th>
                       <th scope="col" class="text-center">No Telp</th>
@@ -79,6 +84,7 @@ DATA VENDOR
                         <tr>
                             <td> {{  $no+=1 }}</td>
                             <td class="text-center" > {{ strtoupper($vendor->nama_vendor) }}</td>
+                            <td class="text-center" > {{ strtoupper($vendor->vendor_number) }}</td>
                             <td class="text-center" > {{ strtoupper($vendor->alamat) }}</td>
                             <td class="text-center" > {{ strtoupper($vendor->negara) }}</td>
                             <td class="text-center" > {{ strtoupper($vendor->no_telp) }}</td>
@@ -122,6 +128,16 @@ DATA VENDOR
                 @csrf
                 @method('PUT')
                 <div class="card-body">
+
+                <div class="form-group">
+                  <label for="vendor_number">{{ __('Singkatan') }}</label>
+                  <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text"><i class="fas fa-info"></i></span>
+                    </div>
+                    <input id="vendor_number" type="text" class="form-control @error('vendor_number') is-invalid @enderror" name="vendor_number" value="{{ old('vendor_number') }}" placeholder="{{ __('Vendor Number') }}" disabled>
+                  </div>
+                </div>
 
                 <div class="form-group">
                   <label for="nama_vendor">{{ __('Nama Vendor') }}</label>
@@ -193,6 +209,17 @@ DATA VENDOR
               <form method="POST" role="form"  action="/vendors" enctype="multipart/form-data">
                 @csrf
                 <div class="card-body">
+
+                <div class="form-group">
+                  <label for="vendor_number2">{{ __('Vendor Number') }}</label>
+                  <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text"><i class="fas fa-info"></i></span>
+                    </div>
+                    <input id="vendor_number2" disabled type="text" class="form-control @error('vendor_number') is-invalid @enderror"  value="{{ old('vendor_number') }}" placeholder="{{ __('Vendor Number') }}" >
+                    <input type="hidden" name="vendor_number" id="vendor_number3">
+                  </div> 
+                  </div>
 
                 <div class="form-group">
                   <label for="nama_vendor">{{ __('Nama Vendor') }}</label>
@@ -283,6 +310,7 @@ $('body').on('click', '.edit', function (event) {
     event.preventDefault();
     var id = $(this).data('id');
     $.get('vendors/' + id + '/edit', function (data) {
+        var vendor_number = data.data.vendor_number;
         var nama = data.data.nama_vendor;
         var namabesar = nama.toUpperCase();
         var alamat = data.data.alamat;
@@ -292,6 +320,7 @@ $('body').on('click', '.edit', function (event) {
         var notelp = data.data.no_telp;
         var notelpbesar = notelp.toUpperCase();
          $('#id').val(data.data.id);
+         $('#vendor_number').val(vendor_number);
          $('#nama_vendor').val(namabesar);
          $('#alamat').val(alamatbesar);
          $('#negara').val(negarabesar);
@@ -326,4 +355,14 @@ $('body').on('click', '.edit', function (event) {
       })
     </script>
 
+<script type="text/javascript">
+  $('#tambah').click(function(){ 
+    $.get('/vendors/number', function (data) {
+        var vendornumber = data.data;
+        $('#vendor_number2').val(vendornumber);
+        $('#vendor_number3').val(vendornumber);
+     });
+    
+    });
+ </script>
 @endpush

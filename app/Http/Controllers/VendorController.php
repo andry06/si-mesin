@@ -21,7 +21,7 @@ class VendorController extends Controller
     public function index()
     {
         $user = Auth::user();
-        $vendors = Vendor::all()->sortBy('nama_vendor');
+        $vendors = Vendor::all()->sortBy('vendor_number');
         return view('vendors.index', compact('vendors'));
     }
 
@@ -45,6 +45,7 @@ class VendorController extends Controller
     {
         $request->validate([
             'nama_vendor' => 'required|max:50|unique:vendors',
+            'vendor_number' => 'required|max: 3|unique:vendors',
             'alamat' => 'max:100',
             'negara' => 'max:50',
             'no_telp' => 'max: 13'
@@ -52,6 +53,7 @@ class VendorController extends Controller
         
         $vendors = Vendor::create([
                     'nama_vendor' => strtolower($request['nama_vendor']),
+                    'vendor_number' => $request['vendor_number'],
                     'alamat' => strtolower($request['alamat']),
                     'negara' => strtolower($request['negara']),
                     'no_telp' => strtolower($request['no_telp']),
@@ -148,5 +150,15 @@ class VendorController extends Controller
         $perusahaan = Perusahaan::find(1)->get();
         $vendors = Vendor::all()->sortBy('name');
         return view('vendors.printdata', compact('vendors', 'perusahaan'));
+    }
+
+    public function number()
+    {
+        $vendor = DB::select("SELECT MAX(vendor_number)+1 lanjutan FROM vendors");
+        $vendor1 = sprintf("%03s", $vendor[0]->lanjutan);
+        
+        return response()->json([
+            'data' => $vendor1
+          ]);
     }
 }

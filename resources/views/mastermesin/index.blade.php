@@ -34,6 +34,35 @@ DATA MASTER MESIN
 @endsection
 
 @section('content')
+
+@error('jenismesin_id')
+  <?php Alert::error('Problem Jenis Mesin', $message); ?>
+@enderror
+
+@error('merkmesin_id')
+  <?php Alert::error('Problem Merk Mesin', $message); ?>
+@enderror
+
+@error('type')
+    <?php Alert::error('Problem Type', $message); ?>
+@enderror
+
+@error('no_seri')
+    <?php Alert::error('Problem No Seri', $message); ?>
+@enderror
+
+@error('vendor_id')
+    <?php Alert::error('Problem Vendor', $message); ?>
+@enderror
+
+@error('status')
+    <?php Alert::error('Kepemilikan', $message); ?>
+@enderror
+
+@error('barcode_mesin')
+    <?php Alert::error('Barcode Mesin', $message); ?>
+@enderror
+
 <div class="col-md-12">
     <div class="row">
           <div class="col-12">
@@ -50,8 +79,7 @@ DATA MASTER MESIN
                 </button>
               </center>
               <!-- <div class="card-body"> -->
-              <form method="post" target="_blank" action="/users/print" id="form-kirim">
-              @csrf
+             
               
                 <table id="example2"  class="table table-hover text-nowrap table-striped table-bordered">
                   <thead class="thead-info"> 
@@ -97,13 +125,149 @@ DATA MASTER MESIN
                     @endforelse
                   </tbody>
                 </table>
-                <a href="/users/excel" class="btn btn-sm btn-success"><i class="fa fa-file" aria-hidden="true"></i> EXPORT EXCEL</a> 
+                <a href="/mastermesin/excel" class="btn btn-sm btn-success"><i class="fa fa-file" aria-hidden="true"></i> EXPORT EXCEL</a> 
                 </div>
                
               <!-- /.card-body -->
             </div>
              
             <!-- /.card -->
+
+<!-- Modal Edit Data data -->
+<div id="myEdit" class="modal fade" tabindex="-1" role="dialog">
+<div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header bg-info">
+              <h4 class="modal-title">EDIT DATA MESIN</h4>
+              
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+              <div class="modal-body">
+              <form method="POST" role="form"  id="editform" enctype="multipart/form-data">
+                @csrf
+                @method('PUT')
+                <div class="card-body">
+
+                <div class="form-group">
+                  <label for="jenismesin_id">{{ __('Jenis Mesin') }}</label>
+                  <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text"><i class="fas fa-list-alt"></i></span>
+                    </div>
+                    <select name="jenismesin_id" id="jenismesin_id" class="form-control select2bs4 @error('jenismesin_id') is-invalid @enderror" >
+                        @foreach($jenismesin as $key => $jm) 
+                          <option value="{{ $jm->id }}" @if (old('jenismesin_id') == '{{ $jm->id }}') selected @endif>{{ strtoupper($jm->jenismesin) }}</option>
+                        @endforeach
+                    </select>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label for="merkmesin_id">{{ __('Merk Mesin') }}</label>
+                  <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text"><i class="fas fa-list-ol"></i></span>
+                    </div>
+                    <select name="merkmesin_id" id="merkmesin_id" class="form-control select2bs4 @error('merkmesin_id') is-invalid @enderror" id="merkmesin_id2" >
+                        @foreach($merkmesin as $key => $mm) 
+                          <option value="{{ $mm->id }}" @if (old('merkmesin_id') == '{{ $mm->id }}') selected @endif>{{ strtoupper($mm->merk_mesin) }}</option>
+                        @endforeach
+                    </select>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label for="type">{{ __('Type Mesin') }}</label>
+                  <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text"><i class="fas fa-edit"></i></span>
+                    </div>
+                    <input id="type" type="text" class="form-control @error('type') is-invalid @enderror" name="type" value="{{ old('type') }}" placeholder="{{ __('Type Mesin') }}" required autocomplete="type">
+                  </div>
+                        
+                  </div>
+
+                <div class="form-group">
+                  <label for="no_seri">{{ __('No Seri') }}</label>
+                  <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text"><i class="fas fa-credit-card"></i></span>
+                    </div>
+                    <input id="no_seri" type="text" class="form-control @error('no_seri') is-invalid @enderror" name="no_seri" placeholder="{{ __('No Seri') }}" required autocomplete="no_seri">
+                  </div>
+                  </div>
+
+                  <div class="form-group">
+                  <label for="vendor_id">{{ __('Kepemilikan') }}</label>
+                  <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text"><i class="fas fa-university"></i></span>
+                    </div>
+                    <select name="vendor_id" id="vendor_id" class="form-control select2bs4 @error('vendor_id') is-invalid @enderror" required autocomplete="vendor_id">
+                      <!-- <option selected="">--Kepemilikan -- </option> -->
+                        @foreach($vendors as $key => $vendor) 
+                          <option value="{{ $vendor->id }}" @if (old('vendor_id') == '{{ $vendor->id }}') selected  @endif>{{ strtoupper($vendor->nama_vendor) }}</option>
+                        @endforeach
+                    </select>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label for="status">{{ __('Status') }}</label>
+                  <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text"><i class="fas fa-list"></i></span>
+                    </div>
+                      <select id="status" name="status" class="form-control @error('status') is-invalid @enderror">
+                        <option value="">== Pilih Status ==</option>
+                        <option value="inhouse" @if (old('status') == 'inhouse') selected @endif >Inhouse</option>
+                        <option value="dipinjamkan" @if (old('status') == 'dipinjamkan') selected @endif >Di Sewakan</option>
+                        <option value="diservis" @if (old('status') == 'diservis') selected @endif>Di Servis</option>
+                        <option value="rusak" @if (old('status') == 'rusak') selected @endif>Rusak</option>
+                        <option value="rental" @if (old('status') == 'rental') selected @endif>Sewa</option>
+                        <option value="dikembalikan" @if (old('status') == 'dikembalikan') selected @endif>Di Kembalikan</option>
+                      </select>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label for="barcode_mesin">{{ __('NO BARCODE') }}</label>
+                  <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text"><i class="fas fa-tags"></i></span>
+                    </div>
+                    <input id="barcode_mesin" type="text" class="form-control @error('barcode_mesin') is-invalid @enderror" placeholder="{{ __('Barcode Mesin') }}" disabled autocomplete="barcode_mesin" >
+                    <input type="hidden" name="barcode_mesin"  id="barcode_mesin1">
+                  </div>
+                  </div>
+                  
+                <div class="form-group">
+                  <label for="photo">File Photo</label>
+                  <div class="input-group">
+                    <div class="custom-file">
+                    <!-- <label for="formFileSm" class="form-label">Small file input example</label> -->
+                    <input class="form-control form-control" name="photo" id="formFileSm" type="file">
+                    </div>
+                  </div>
+                </div>
+
+            </div>
+            <div class="modal-footer justify-content-between">
+              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+              <button type="submit" class="btn btn-primary">
+                {{ __('Save') }}
+              </button>
+              </form>
+            </div>
+          </div>
+        </div>
+    </div>
+</div>
+</div>
+<!-- Modal Edit data -->
+
 
 <!-- ===================================== // MODAL TAMBAH // ===================================== -->
 <div class="modal fade" id="modal-default" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -139,7 +303,7 @@ DATA MASTER MESIN
                   <label for="merkmesin_id2">{{ __('Merk Mesin') }}</label>
                   <div class="input-group mb-3">
                     <div class="input-group-prepend">
-                      <span class="input-group-text"><i class="fas fa-user"></i></span>
+                      <span class="input-group-text"><i class="fas fa-list-ol"></i></span>
                     </div>
                     <select name="merkmesin_id" id="merkmesin_id2" class="form-control select2bs4 @error('merkmesin_id') is-invalid @enderror" id="merkmesin_id2" >
                       <option selected="">Tentukan Merk Mesin</option>
@@ -154,7 +318,7 @@ DATA MASTER MESIN
                   <label for="type2">{{ __('Type Mesin') }}</label>
                   <div class="input-group mb-3">
                     <div class="input-group-prepend">
-                      <span class="input-group-text"><i class="fas fa-tasks"></i></span>
+                      <span class="input-group-text"><i class="fas fa-edit"></i></span>
                     </div>
                     <input id="type2" type="text" class="form-control @error('type') is-invalid @enderror" name="type" value="{{ old('type') }}" placeholder="{{ __('Type Mesin') }}" required autocomplete="type">
                   </div>
@@ -162,12 +326,12 @@ DATA MASTER MESIN
                   </div>
 
                 <div class="form-group">
-                  <label for="noseri2">{{ __('No Seri') }}</label>
+                  <label for="no_seri2">{{ __('No Seri') }}</label>
                   <div class="input-group mb-3">
                     <div class="input-group-prepend">
-                      <span class="input-group-text"><i class="fas fa-tags"></i></span>
+                      <span class="input-group-text"><i class="fas fa-credit-card"></i></span>
                     </div>
-                    <input id="noseri2" type="text" class="form-control @error('no_seri') is-invalid @enderror" name="no_seri" placeholder="{{ __('No Seri') }}" required autocomplete="no_seri">
+                    <input id="no_seri2" type="text" class="form-control @error('no_seri') is-invalid @enderror" name="no_seri" placeholder="{{ __('No Seri') }}" required autocomplete="no_seri">
                   </div>
                   </div>
 
@@ -175,12 +339,12 @@ DATA MASTER MESIN
                   <label for="vendor_id2">{{ __('Kepemilikan') }}</label>
                   <div class="input-group mb-3">
                     <div class="input-group-prepend">
-                      <span class="input-group-text"><i class="fas fa-user"></i></span>
+                      <span class="input-group-text"><i class="fas fa-university"></i></span>
                     </div>
                     <select name="vendor_id" id="vendor_id2" class="form-control select2bs4 @error('vendor_id') is-invalid @enderror" required autocomplete="vendor_id">
                       <!-- <option selected="">--Kepemilikan -- </option> -->
                         @foreach($vendors as $key => $vendor) 
-                          <option value="{{ $mm->id }}" @if (old('merkmesin_id') == '{{ $vendor->id }}') selected  @endif>{{ strtoupper($vendor->nama_vendor) }}</option>
+                          <option value="{{ $vendor->id }}" @if (old('vendor_id') == '{{ $vendor->id }}') selected  @endif>{{ strtoupper($vendor->nama_vendor) }}</option>
                         @endforeach
                     </select>
                   </div>
@@ -203,15 +367,24 @@ DATA MASTER MESIN
                       </select>
                   </div>
                 </div>
-                
-                <input id="barcodeuser2" type="hidden" class="form-control @error('barcode_user') is-invalid @enderror" name="barcode_user" value="{{ old('barcodeuser') }}" placeholder="Barcode User" autocomplete="barcodeuser" autofocus>
+
+                <div class="form-group">
+                  <label for="barcode_mesin2">{{ __('NO BARCODE') }}</label>
+                  <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text"><i class="fas fa-tags"></i></span>
+                    </div>
+                    <input id="barcode_mesin2" type="text" class="form-control @error('barcode_mesin') is-invalid @enderror" placeholder="{{ __('Barcode Mesin') }}" disabled autocomplete="barcode_mesin" >
+                    <input type="hidden" name="barcode_mesin"  id="barcode_mesin3">
+                  </div>
+                  </div>
                   
                 <div class="form-group">
                   <label for="photo">File Photo</label>
                   <div class="input-group">
                     <div class="custom-file">
                     <!-- <label for="formFileSm" class="form-label">Small file input example</label> -->
-                    <input class="form-control form-control" name="photo" id="formFileSm" type="file">
+                    <input class="form-control form-control" name="photo" id="formFileSm2" type="file">
                     </div>
                   </div>
                 </div>
@@ -219,7 +392,7 @@ DATA MASTER MESIN
             <div class="modal-footer justify-content-between">
               <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
               <button type="submit" class="btn btn-primary">
-                {{ __('Register') }}
+                {{ __('SAVE') }}
               </button>
               </form>
             </div>
@@ -280,4 +453,51 @@ $(document).ready(function() {
    });
 
  </script>
+
+<script type="text/javascript">
+  $('#jenismesin_id2, #vendor_id2').change(function(){ 
+      var idvendor = $("#vendor_id2").val();
+      var idjm = $("#jenismesin_id2").val();
+
+    $.get('/mastermesin/' + idvendor + '/' + idjm + '/barcode', function (data) {
+        var barcode = data.data;
+          $('#barcode_mesin2, #barcode_mesin3').val(barcode);
+          
+     });
+    
+    });
+ </script>
+
+<script type="text/javascript">
+  $('#jenismesin_id, #vendor_id').change(function(){ 
+      var idvendor = $("#vendor_id").val();
+      var idjm = $("#jenismesin_id").val();
+
+    $.get('/mastermesin/' + idvendor + '/' + idjm + '/barcode', function (data) {
+        var barcode = data.data;
+          $('#barcode_mesin, #barcode_mesin1').val(barcode);
+          
+     });
+    
+    });
+ </script>
+
+<script>
+$(document).ready(function () {
+$('body').on('click', '.edit', function (event) {
+    event.preventDefault();
+    var id = $(this).data('id');
+    $.get('mastermesin/' + id + '/edit', function (data) {
+         $("#jenismesin_id").val(data.data.jenismesin_id).trigger('change');
+         $("#merkmesin_id").val(data.data.merkmesin_id).trigger('change');
+         $("#type").val(data.data.type.toUpperCase());
+         $("#no_seri").val(data.data.no_seri.toUpperCase());
+         $("#vendor_id").val(data.data.vendor_id).trigger('change');
+         $("#status").val(data.data.status);
+         $("#barcode_mesin, #barcode_mesin1").val(data.data.barcode_mesin);
+         $("#editform").attr("action","mastermesin/"+id);
+     })
+});
+}); 
+</script> 
 @endpush

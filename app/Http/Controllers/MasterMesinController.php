@@ -1,10 +1,11 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use RealRashid\SweetAlert\Facades\Alert;
 use DB;
 use Illuminate\Http\Request;
 use App\MasterMesin;
+use App\MerkMesin;
 use Auth;
 
 class MasterMesinController extends Controller
@@ -22,11 +23,11 @@ class MasterMesinController extends Controller
     public function index()
     {
         $user = Auth::user();
-        $master = MasterMesin::all();
+        $master = MasterMesin::All();
         $jenismesin = DB::table('jenis_mesin')->select('id', 'jenis_mesin as jenismesin')->get();
         $merkmesin = DB::table('merk_mesin')->select('*')->get();
         $vendors = DB::select("select * from vendors order BY (nama_vendor = 'pt. fgx indonesia') DESC, nama_vendor");
-
+        
         return view('mastermesin.index', compact('master', 'jenismesin', 'merkmesin', 'vendors'));
     }
 
@@ -48,7 +49,47 @@ class MasterMesinController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'jenismesin_id' => 'required',
+            'merkmesin_id' => 'required',
+            'type' => 'required|max:20',
+            'no_seri' => 'required|max:20',
+            'vendor_id' => 'required',
+            'barcode_mesin' => 'required',
+            'status' => 'required',
+            'photo' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048'
+        ]);
+
+        
+        if(empty($request['photo'])){    
+            $user = MasterMesin::create([
+                'jenismesin_id' => $request['jenismesin_id'],
+                'merkmesin_id' => $request['merkmesin_id'],
+                'type' => $request['type'],
+                'no_seri' => $request['no_seri'],
+                'vendor_id' => $request['vendor_id'],
+                'status' => $request['status'],
+                'barcode_mesin' => $request['barcode_mesin'],
+                'createduser_id' => Auth::user()->id,
+            ]);
+        }else{
+        $photo = date('d-m-Y').'_'.date('h_i_s').'_'.$request['barcode_mesin'].'.'.$request->photo->extension(); 
+            $user = MasterMesin::create([
+                'jenismesin_id' => $request['jenismesin_id'],
+                'merkmesin_id' => $request['merkmesin_id'],
+                'type' => $request['type'],
+                'no_seri' => $request['no_seri'],
+                'vendor_id' => $request['vendor_id'],
+                'status' => $request['status'],
+                'barcode_mesin' => $request['barcode_mesin'],
+                'createduser_id' => Auth::user()->id,
+                'photo' => $photo
+            ]);
+        $request->photo->move(public_path('img/mesin'), $photo);
+        }
+
+        Alert::success('Berhasil', 'Berhasil Menambahkan Mesin');
+        return redirect('/mastermesin');
     }
 
     /**
@@ -70,7 +111,11 @@ class MasterMesinController extends Controller
      */
     public function edit($id)
     {
-        //
+        $master = MasterMesin::find($id);
+
+	    return response()->json([
+	      'data' => $master
+        ]);
     }
 
     /**
@@ -82,7 +127,44 @@ class MasterMesinController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $request->validate([
+            'jenismesin_id' => 'required',
+            'merkmesin_id' => 'required',
+            'type' => 'required|max:20',
+            'no_seri' => 'required|max:20',
+            'vendor_id' => 'required',
+            'barcode_mesin' => 'required',
+            'status' => 'required',
+            'photo' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048'
+        ]);
+        
+       
+        if(empty($request['photo'])){
+        $update = MasterMesin::where('id', $id)->update([
+                'jenismesin_id' => $request['jenismesin_id'],
+                'merkmesin_id' => $request['merkmesin_id'],
+                'type' => $request['type'],
+                'no_seri' => $request['no_seri'],
+                'vendor_id' => $request['vendor_id'],
+                'status' => $request['status'],
+                'barcode_mesin' => $request['barcode_mesin'],
+        ]);
+        }else{
+            $photo = date('d-m-Y').'_'.date('h_i_s').'_'.$request['name'].'.'.$request->photo->extension(); 
+            $update = MasterMesin::where('id', $id)->update([
+                'jenismesin_id' => $request['jenismesin_id'],
+                'merkmesin_id' => $request['merkmesin_id'],
+                'type' => $request['type'],
+                'no_seri' => $request['no_seri'],
+                'vendor_id' => $request['vendor_id'],
+                'status' => $request['status'],
+                'barcode_mesin' => $request['barcode_mesin'],
+                'photo' => $photo
+            ]);
+            $request->photo->move(public_path('img/mesin'), $photo);   
+        }
+        Alert::success('Berhasil', 'Berhasil Mengedit User');
+        return redirect('/mastermesin');
     }
 
     /**
@@ -95,4 +177,26 @@ class MasterMesinController extends Controller
     {
         //
     }
+
+    public function barcode($idvendor, $idjm)
+    {
+        //dengan query builder
+        $vendors = DB::table('vendors')->select('vendor_number')->where('id', $idvendor)->first();
+
+        $jenismesin = DB::table('jenis_mesin')->select('kode_number')->where('id', $idjm)->first();;
+       
+        $tahun = date('ym');
+
+        //dengan binding sql
+        $barcode = DB::select("SELECT IFNULL(max(SUBSTRING(barcode_mesin, -4)), 0)+1 lanjutan from master_mesin WHERE vendor_id = :id", ['id' => $idvendor]);
+        $nourut = sprintf("%04s", $barcode[0]->lanjutan);
+
+        $gabungan = $tahun.$jenismesin->kode_number.$vendors->vendor_number.$nourut;
+
+	    return response()->json([
+          'data' => $gabungan
+        ]);
+    }
+
+    
 }

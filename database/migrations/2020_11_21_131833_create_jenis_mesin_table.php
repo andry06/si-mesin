@@ -15,8 +15,8 @@ class CreateJenisMesinTable extends Migration
     {
         Schema::create('jenis_mesin', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('jenis_mesin', 50);
-            $table->string('singkatan', 10);
+            $table->string('kode_number', 3)->unique();
+            $table->string('jenis_mesin', 50)->unique();
             $table->unsignedBigInteger('createduser_id');
             $table->timestamps();
             $table->foreign('createduser_id')->references('id')->on('users')->onDelete('restrict')->onUpdate('cascade');

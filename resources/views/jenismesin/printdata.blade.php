@@ -1,4 +1,4 @@
-<title>PRINT DATA VENDORS</title>
+<title>PRINT DATA JENIS MESIN</title>
 <style>
 table, th, td {
   border: 1px solid black;
@@ -11,31 +11,26 @@ table, th, td {
     @foreach($perusahaan as $key => $pt)
           {{ $pt->nama_perusahaan }}
         @endforeach
-<br>DATA VENDOR</h2>
+<br>DATA JENIS MESIN</h2>
 </center>
 <br><br>
 <table border="1px solid black" style="width:100%" >
       <thead>
         <tr>
           <th align="center"><b>No</b></th>
-          <th align="center"><b>Nama Vendor</b></th>
-          <th align="center"><b>Alamat</b></th>
-          <th align="center"><b>Negara</b></th>
-          <th align="center"><b>No Telp</b></th>
+          <th align="center"><b>KODE NUMBER</b></th>
+          <th align="center"><b>JENIS MESIN</b></th>
         </tr>
       </thead>
       <tbody>
       <?php 
         $no = 0
         ?>
-        @forelse($vendors as $key => $vendor)
+        @forelse($jenismesin as $key => $jm)
             <tr>
                 <td> {{  $no+=1 }}</td>
-                <td class="text-center" > {{ strtoupper($vendor->nama_vendor) }}</td>
-                <td class="text-center" > {{ strtoupper($vendor->alamat) }}</td>
-                <td class="text-center" > {{ strtoupper($vendor->negara) }}</td>
-                <td class="text-center" > {{ strtoupper($vendor->no_telp) }}</td>
-               
+                <td align="center" > {{ $jm->kode_number }}</td>
+                <td align="center" > {{ strtoupper($jm->jenis_mesin) }}</td>
             </tr>
         @empty
            <tr>

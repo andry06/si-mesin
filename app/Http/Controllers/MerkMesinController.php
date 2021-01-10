@@ -1,12 +1,13 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Http\Request;
 use RealRashid\SweetAlert\Facades\Alert;
-
+use App\Exports\MerkMesinExport;
 use DB;
 use App\MerkMesin;
+use App\Perusahaan;
 use Auth;
 
 class MerkMesinController extends Controller
@@ -54,12 +55,10 @@ class MerkMesinController extends Controller
     {
         $request->validate([
             'merk_mesin' => 'required|max:45|unique:merk_mesin',
-            'merk_mesin' => 'required|max:10|unique:merk_mesin'
         ]);
         
         $merkmesin = MerkMesin::create([
                     'merk_mesin' => strtolower($request['merk_mesin']),
-                    'singkatan' => strtolower($request['singkatan']),
                     'createduser_id' => Auth::user()->id
                     ]);
     
@@ -86,11 +85,11 @@ class MerkMesinController extends Controller
      */
     public function edit($id)
     {
-        $user = Auth::user();
-        $merkmesin1 = MerkMesin::all()->sortBy('merk_mesin');
-
         $merkmesin = MerkMesin::find($id);
-        return view('merkmesin.edit', compact('merkmesin', 'merkmesin1'));
+
+	    return response()->json([
+	      'data' => $merkmesin
+        ]);
     }
 
     /**
@@ -122,6 +121,28 @@ class MerkMesinController extends Controller
      */
     public function destroy($id)
     {
-        //
+        
+    }
+
+    
+    public function hapus($id)
+    {
+        // menghapus data pegawai berdasarkan id yang dipilih
+        $merkmesin = MerkMesin::destroy($id);
+        Alert::success('Berhasil', 'Berhasil Menghapus User');
+        return redirect('/merkmesin');
+    }
+
+    public function exportexcel(Request $request)
+    {
+        return Excel::download(new MerkMesinExport, 'merkmesin.xlsx');
+        
+    }
+    
+    public function printdata()
+    {
+        $perusahaan = Perusahaan::find(1)->get();
+        $merkmesin = MerkMesin::all()->sortBy('merk_mesin');
+        return view('merkmesin.printdata', compact('merkmesin', 'perusahaan'));
     }
 }

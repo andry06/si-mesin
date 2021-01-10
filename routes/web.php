@@ -47,18 +47,27 @@ Route::get('/', function () {
 // Route::delete('/perusahaan/{id}', 'PerusahaanController@destroy');
 
 // Route::resource('perusahaan', 'PerusahaanController')->middleware('auth');
+Route::get('/mastermesin/{idvendor}/{idjm}/barcode', 'MasterMesinController@barcode');
+Route::resource('mastermesin', 'MasterMesinController');
 Route::post('/users/print', 'UserController@print')->name('printuser');
 Route::get('/users/hapus/{id}','UserController@hapus');
 Route::post('/users/reset/{id}','UserController@reset');
 Route::get('/users/excel', 'UserController@exportexcel');
 Route::get('/users/printdata', 'UserController@printdata');
 Route::resource('perusahaan', 'PerusahaanController');
+Route::get('/jenismesin/printdata', 'JenisMesinController@printdata');
+Route::get('/jenismesin/excel', 'JenisMesinController@exportexcel');
+Route::get('/jenismesin/number', 'JenisMesinController@number');
+Route::get('/jenismesin/hapus/{id}','JenisMesinController@hapus');
 Route::resource('jenismesin', 'JenisMesinController');
+Route::get('/merkmesin/printdata', 'MerkMesinController@printdata');
+Route::get('/merkmesin/excel', 'MerkMesinController@exportexcel');
+Route::get('/merkmesin/hapus/{id}','MerkMesinController@hapus');
 Route::resource('merkmesin', 'MerkMesinController');
-Route::resource('mastermesin', 'MasterMesinController');
 Route::get('/vendors/printdata', 'VendorController@printdata');
 Route::get('/vendors/hapus/{id}','VendorController@hapus');
 Route::get('/vendors/excel', 'VendorController@exportexcel');
+Route::get('/vendors/number', 'VendorController@number');
 Route::resource('vendors', 'VendorController');
 
 
