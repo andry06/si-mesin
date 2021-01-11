@@ -268,6 +268,72 @@ DATA MASTER MESIN
 </div>
 <!-- Modal Edit data -->
 
+<!-- Modal Show Data data-->
+<div id="myShow" class="modal fade" tabindex="-1" role="dialog">
+<div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header bg-info">
+              <h4 class="modal-title">TAMPIL DATA Mesin</h4>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+              <div class="modal-body">
+                <div class="card text-center">
+                  <div class="card-header">
+                    <b>
+                    <table>
+                      <tr>
+                        <td width="40%" align="left"><span style="margin-left: 30%">JENIS MESIN</span></td>
+                        <td width="1%"> : </td>
+                        <td width="59%" align="left"><span id="tampiljenis" style="margin-left: 10%"></span></td>
+                      </tr>
+                      <tr>
+                        <td align="left"><span style="margin-left: 30%">MERK MESIN</span></td>
+                        <td> : </td>
+                        <td align="left"><span id="tampilmerk" style="margin-left: 10%"></span></td>
+                      </tr>
+                      <tr>
+                        <td align="left"><span style="margin-left: 30%">TYPE MESIN</span></td>
+                        <td> : </td>
+                        <td align="left"><span id="tampiltype" style="margin-left: 10%"></span></td>
+                      </tr>
+                      <tr>
+                        <td align="left"><span style="margin-left: 30%">NO SERI</span></td>
+                        <td> : </td>
+                        <td align="left"><span id="tampilnoseri" style="margin-left: 10%"></span></td>
+                      </tr>
+                    </table>
+                  </div>
+                  <div class="card-body">
+                    <img id="tampilphoto" width="130px" height="200px" class="img-thumbnail" alt="...">
+                    <br><br>
+                    KEPEMILIKAN <span id="tampilmilik"></span>
+                    <br>
+                    STATUS MESIN <span id="tampilstatus" ></span>
+                    <br>
+                  
+                  </div>
+                  <div class="card-footer text-muted">
+                  <center>
+                 
+                  <img id="tampilbarcode" src="data:image/png;base64,{{DNS1D::getBarcodePNG('212122', 'C128A')}}" alt="barcode" />
+                  <br>
+                  <span id="tampilnobarcode" style="font-weight: bold"></span>
+                  </center> 
+                  </div>
+                  <div class="modal-footer justify-content-between">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <!-- <a id="printidcard" class="btn btn-sm btn-warning"><i class="fa fa-print"></i> PRINT</a> -->
+                </div>
+                </div>
+            </div>
+          </div>
+        </div>
+    </div>
+</div>
+</div>
+<!-- Modal tampil data -->
 
 <!-- ===================================== // MODAL TAMBAH // ===================================== -->
 <div class="modal fade" id="modal-default" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -500,4 +566,26 @@ $('body').on('click', '.edit', function (event) {
 });
 }); 
 </script> 
+
+<script>
+$(document).ready(function () {
+$('body').on('click', '.tampil', function (event) {
+    event.preventDefault();
+    var id = $(this).data('id');
+    $.get('mastermesin/' + id + '/edit', function (data) {
+         $('#id').val(data.data.id);
+         console.log(data.data.jenis_mesin);
+         $('#tampiljenis').html(data.data.jenis_mesin.toUpperCase());
+         $('#tampilmerk').html(data.data.merk_mesin.toUpperCase());
+         $('#tampiltype').html(data.data.type.toUpperCase());
+         $('#tampilnoseri').html(data.data.no_seri.toUpperCase());
+         $('#tampilmilik').html(data.data.nama_vendor.toUpperCase());
+         $('#tampilstatus').html(data.data.status.toUpperCase());
+         $('#tampilnobarcode').html(data.data.barcode_mesin.toUpperCase());
+         console.log(data.data2);
+         $("#tampilphoto").attr("src","/img/mesin/"+data.data.photo);
+     })
+});
+}); 
+</script>
 @endpush

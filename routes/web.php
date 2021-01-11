@@ -48,6 +48,7 @@ Route::get('/', function () {
 
 // Route::resource('perusahaan', 'PerusahaanController')->middleware('auth');
 Route::get('/mastermesin/{idvendor}/{idjm}/barcode', 'MasterMesinController@barcode');
+Route::get('/mastermesin/hapus/{id}','MasterMesinController@hapus');
 Route::resource('mastermesin', 'MasterMesinController');
 Route::post('/users/print', 'UserController@print')->name('printuser');
 Route::get('/users/hapus/{id}','UserController@hapus');

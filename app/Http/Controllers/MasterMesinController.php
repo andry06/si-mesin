@@ -6,6 +6,7 @@ use DB;
 use Illuminate\Http\Request;
 use App\MasterMesin;
 use App\MerkMesin;
+
 use Auth;
 
 class MasterMesinController extends Controller
@@ -26,6 +27,7 @@ class MasterMesinController extends Controller
         $master = MasterMesin::All();
         $jenismesin = DB::table('jenis_mesin')->select('id', 'jenis_mesin as jenismesin')->get();
         $merkmesin = DB::table('merk_mesin')->select('*')->get();
+        
         $vendors = DB::select("select * from vendors order BY (nama_vendor = 'pt. fgx indonesia') DESC, nama_vendor");
         
         return view('mastermesin.index', compact('master', 'jenismesin', 'merkmesin', 'vendors'));
@@ -111,10 +113,17 @@ class MasterMesinController extends Controller
      */
     public function edit($id)
     {
-        $master = MasterMesin::find($id);
+        $master = DB::select("SELECT A.*, B.kode_number, B.jenis_mesin, C.merk_mesin, D.vendor_number, D.nama_vendor
+                 from master_mesin A join jenis_mesin B on A.jenismesin_id = B.id
+                join merk_mesin C on A.merkmesin_id = C.id join vendors D on A.vendor_id = D.id 
+                WHERE A.id = :id", ['id' => $id]);
+        $barcode = (string)$master[0]->barcode_mesin;
+        $src = "data:image/png;base64,{{DNS1D::getBarcodePNG('$barcode', 'C128A')}}";
+        
 
 	    return response()->json([
-	      'data' => $master
+          'data' => $master[0],
+    
         ]);
     }
 
@@ -150,7 +159,7 @@ class MasterMesinController extends Controller
                 'barcode_mesin' => $request['barcode_mesin'],
         ]);
         }else{
-            $photo = date('d-m-Y').'_'.date('h_i_s').'_'.$request['name'].'.'.$request->photo->extension(); 
+            $photo = date('d-m-Y').'_'.date('h_i_s').'_'.$request['barcode_mesin'].'.'.$request->photo->extension(); 
             $update = MasterMesin::where('id', $id)->update([
                 'jenismesin_id' => $request['jenismesin_id'],
                 'merkmesin_id' => $request['merkmesin_id'],
@@ -176,6 +185,14 @@ class MasterMesinController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function hapus($id)
+    {
+        // menghapus data pegawai berdasarkan id yang dipilih
+        $user = MasterMesin::destroy($id);
+        Alert::success('Berhasil', 'Berhasil Menghapus User');
+        return redirect('/mastermesin');
     }
 
     public function barcode($idvendor, $idjm)

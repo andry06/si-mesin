@@ -150,9 +150,7 @@ DATA USERS PENGGUNA
                 <div class="card text-center">
                   <div class="card-header">
                     <h4>
-                      @foreach($perusahaan as $key => $pt)
-                        {{ $pt->nama_perusahaan }}
-                      @endforeach
+                      {{ $perusahaan->nama_perusahaan }}
                     </h4>
                     <span id="tampillevel" style="font-weight: bold"></span>
                   </div>

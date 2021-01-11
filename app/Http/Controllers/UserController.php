@@ -33,7 +33,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        $perusahaan = Perusahaan::find(1)->get();
+        $perusahaan = Perusahaan::select(['nama_perusahaan'])->first();
         $users = User::all()->sortBy('name');
         return view('users.index', compact('users', 'perusahaan'));
     }
