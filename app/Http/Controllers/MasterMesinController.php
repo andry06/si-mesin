@@ -33,6 +33,82 @@ class MasterMesinController extends Controller
         return view('mastermesin.index', compact('master', 'jenismesin', 'merkmesin', 'vendors'));
     }
 
+    public function data(Request $request)
+    {
+        $orderBy = 'jenis_mesin.jenis_mesin';
+        switch($request->input('order.0.column')){
+            case "1" :
+                $orderBy = 'merk_mesin.merk_mesin';
+                break;
+            case "2" :
+                $orderBy = 'master_mesin.type';
+                break;
+            case "3" :
+                $orderBy = 'master_mesin.no_seri';
+                break;
+            case "4" :
+                $orderBy = 'vendors.nama_vendor';
+                break;
+            case "5" :
+                $orderBy = 'master_mesin.barcode_mesin';
+                break;
+            case "6" :
+                $orderBy = 'master_mesin.status';
+                break;
+        }
+
+        $data = MasterMesin::Select([
+            'master_mesin.*', 
+            'jenis_mesin.jenis_mesin',
+            'merk_mesin.merk_mesin',
+            'vendors.nama_vendor' 
+            ])->join('jenis_mesin', 'jenis_mesin.id', '=', 'master_mesin.jenismesin_id')
+            ->join('merk_mesin', 'merk_mesin.id', '=', 'master_mesin.merkmesin_id')
+            ->join('vendors', 'vendors.id', '=', 'master_mesin.vendor_id')
+        ;
+
+        if($request->input('search.value')!=null){
+            $data = $data->where(function($q)use($request){
+                $q->whereRaw('LOWER(jenis_mesin) like ? ', ['%'.strtolower($request->input('search.value')).'%'])
+                ->orWhereRaw('LOWER(merk_mesin) like ? ', ['%'.strtolower($request->input('search.value')).'%'])
+                ->orWhereRaw('LOWER(type) like ? ', ['%'.strtolower($request->input('search.value')).'%'])
+                ->orWhereRaw('LOWER(no_seri) like ? ', ['%'.strtolower($request->input('search.value')).'%'])
+                ->orWhereRaw('LOWER(nama_vendor) like ? ', ['%'.strtolower($request->input('search.value')).'%'])
+                ->orWhereRaw('LOWER(barcode_mesin) like ? ', ['%'.strtolower($request->input('search.value')).'%'])
+                ->orWhereRaw('LOWER(status) like ? ', ['%'.strtolower($request->input('search.value')).'%']);
+                ;
+            });
+        }
+        
+        if($request->input('filter_jenismesin')!=null){
+            $data = $data->where('jenismesin_id', $request->filter_jenismesin);
+        }
+
+        if($request->input('filter_merkmesin')!=null){
+            $data = $data->where('merkmesin_id', $request->filter_merkmesin);
+        }
+
+        if($request->input('filter_vendor')!=null){
+            $data = $data->where('vendor_id', $request->filter_vendor);
+        }
+
+        if($request->input('filter_status')!=null){
+            $data = $data->where('status', $request->filter_status);
+        }
+
+        $recordsFiltered = $data->get()->count();
+        if($request->input('length')!=-1) $data =  $data->skip($request->input('start'))->take($request->input('length'));
+        $data = $data->orderBy($orderBy, $request->input('order.0.dir'))->get();
+        $recordsTotal = $data->count();
+        
+        return response()->json([
+            'draw'=>$request->input('draw'),
+            'recordsTotal'=>$recordsTotal,
+            'recordsFiltered'=>$recordsFiltered,
+            'data'=>$data
+        ]);
+    }
+
     /**
      * Show the form for creating a new resource.
      *
@@ -61,7 +137,6 @@ class MasterMesinController extends Controller
             'status' => 'required',
             'photo' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048'
         ]);
-
         
         if(empty($request['photo'])){    
             $user = MasterMesin::create([
@@ -213,6 +288,15 @@ class MasterMesinController extends Controller
 	    return response()->json([
           'data' => $gabungan
         ]);
+    }
+
+    public function print(Request $request)
+    {
+        $id = $request->id; 
+        $data = implode(",", $id);
+        $master = DB::select("select barcode_mesin from master_mesin where id in ($data)");
+        
+        return view('mastermesin.print', compact('master'));
     }
 
     

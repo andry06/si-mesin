@@ -11,7 +11,14 @@
   <link rel="stylesheet" href=" {{ asset('/adminlte/plugins/fontawesome-free/css/all.min.css') }}">
   <!-- Theme style -->
   <link rel="stylesheet" href="{{ asset('/adminlte/dist/css/adminlte.min.css') }}">
- 
+  <style>
+    .devider{
+      width: 100%;
+      height: 1px;
+      background: #BBB;
+      margin: 1rem 0;
+    }
+  </style>
   @stack('csstambahan')
 </head>
 <body class="hold-transition sidebar-mini layout-footer-fixed">

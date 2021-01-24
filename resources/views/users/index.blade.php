@@ -306,7 +306,7 @@ DATA USERS PENGGUNA
                   <div class="input-group">
                     <div class="custom-file">
                     <!-- <label for="formFileSm" class="form-label">Small file input example</label> -->
-                    <input class="form-control form-control" name="photo" id="formFileSm" type="file">
+                    <input class="form-control form-control" name="photo" id="formFileSm" accept="image/*" type="file">
                     </div>
                   </div>
                 </div>
@@ -415,7 +415,7 @@ DATA USERS PENGGUNA
                   <div class="input-group">
                     <div class="custom-file">
                     <!-- <label for="formFileSm" class="form-label">Small file input example</label> -->
-                    <input class="form-control form-control" name="photo" id="formFileSm2" type="file">
+                    <input class="form-control form-control" name="photo" id="formFileSm2" accept="image/*" type="file">
                     </div>
                   </div>
                 </div>

@@ -47,6 +47,8 @@ Route::get('/', function () {
 // Route::delete('/perusahaan/{id}', 'PerusahaanController@destroy');
 
 // Route::resource('perusahaan', 'PerusahaanController')->middleware('auth');
+Route::any('/mastermesin/data', 'MasterMesinController@data');
+Route::post('/mastermesin/print', 'MasterMesinController@print');
 Route::get('/mastermesin/{idvendor}/{idjm}/barcode', 'MasterMesinController@barcode');
 Route::get('/mastermesin/hapus/{id}','MasterMesinController@hapus');
 Route::resource('mastermesin', 'MasterMesinController');
