@@ -79,6 +79,57 @@ DATA MASTER MESIN
               </center>
               
               <div style="margin: 2%">
+                <div class="row" id="row-tampilan">
+                    <div class="col-md-12">
+                      <h5><b>Tampilan Kolom : </b></h5>
+                    </div>
+                    <div class="col-md-2">
+                        <label>
+                          <input type="checkbox" class="tampilan" data-kolom="1" checked="true"> Jenis Mesin
+                        </label>
+                    </div>
+                    <div class="col-md-2">
+                        <label>
+                          <input type="checkbox" class="tampilan" data-kolom="2" checked="true"> Merk Mesin
+                        </label>
+                    </div>
+                    <div class="col-md-2">
+                        <label>
+                          <input type="checkbox" class="tampilan" data-kolom="3" checked="true"> Type Mesin
+                        </label>
+                    </div>
+                    <div class="col-md-2">
+                        <label>
+                          <input type="checkbox" class="tampilan" data-kolom="4" checked="true"> No Seri
+                        </label>
+                    </div>  
+                    <div class="col-md-2">
+                        <label>
+                          <input type="checkbox" class="tampilan" data-kolom="5" checked="true"> Kepemilikan
+                        </label>
+                    </div>
+                    <div class="col-md-2">
+                        <label>
+                          <input type="checkbox" class="tampilan" data-kolom="6"> Barcode Mesin
+                        </label>
+                    </div>
+                    <div class="col-md-2">
+                        <label>
+                          <input type="checkbox" class="tampilan" data-kolom="7" checked="true"> Status
+                        </label>
+                    </div>
+                    <div class="col-md-2">
+                        <label>
+                          <input type="checkbox" class="tampilan" data-kolom="8"> Foto
+                        </label>
+                    </div>
+                    <div class="col-md-2">
+                        <label>
+                          <input type="checkbox" class="tampilan" data-kolom="9" checked="true"> Action
+                        </label>
+                    </div>
+                </div>
+              <br>
                 <h5><b>Filter Data : </b></h5>
                 <div class="row">
                 <div class="col-sm-3">
@@ -122,10 +173,10 @@ DATA MASTER MESIN
                         <select id="filter_status" name="filterstatus" class="filter form-control @error('status') is-invalid @enderror">
                         <option value="">Semua Status Mesin</option>
                         <option value="inhouse" @if (old('status') == 'inhouse') selected @endif >Inhouse</option>
-                        <option value="dipinjamkan" @if (old('status') == 'dipinjamkan') selected @endif >Di Sewakan</option>
+                        <option value="dipinjamkan" @if (old('status') == 'dipinjamkan') selected @endif >Di Pinjamkan</option>
                         <option value="diservis" @if (old('status') == 'diservis') selected @endif>Di Servis</option>
                         <option value="rusak" @if (old('status') == 'rusak') selected @endif>Rusak</option>
-                        <option value="rental" @if (old('status') == 'rental') selected @endif>Sewa</option>
+                        <option value="rental" @if (old('status') == 'rental') selected @endif>Rental</option>
                         <option value="dikembalikan" @if (old('status') == 'dikembalikan') selected @endif>Di Kembalikan</option>
                       </select>
                       </select>
@@ -152,6 +203,7 @@ DATA MASTER MESIN
                       <th scope="col" class="text-center">Kepemilikan</th>
                       <th scope="col" class="text-center">Barcode Mesin</th>
                       <th scope="col" class="text-center">Status</th>
+                      <th scope="col" class="text-center">Foto</th>
                       <th scope="col" class="text-center">Action</th>
                     </tr>
                   </thead>
@@ -260,10 +312,10 @@ DATA MASTER MESIN
                 <select id="status" name="status" class="form-control @error('status') is-invalid @enderror">
                   <option value="">== Pilih Status ==</option>
                   <option value="inhouse" @if (old('status') == 'inhouse') selected @endif >Inhouse</option>
-                  <option value="dipinjamkan" @if (old('status') == 'dipinjamkan') selected @endif >Di Sewakan</option>
+                  <option value="dipinjamkan" @if (old('status') == 'dipinjamkan') selected @endif >Di Pinjamkan</option>
                   <option value="diservis" @if (old('status') == 'diservis') selected @endif>Di Servis</option>
                   <option value="rusak" @if (old('status') == 'rusak') selected @endif>Rusak</option>
-                  <option value="rental" @if (old('status') == 'rental') selected @endif>Sewa</option>
+                  <option value="rental" @if (old('status') == 'rental') selected @endif>Rental</option>
                   <option value="dikembalikan" @if (old('status') == 'dikembalikan') selected @endif>Di Kembalikan</option>
                 </select>
             </div>
@@ -394,10 +446,10 @@ DATA MASTER MESIN
                       <select id="status2" name="status" class="form-control @error('status') is-invalid @enderror">
                         <option value="">== Pilih Status ==</option>
                         <option value="inhouse" @if (old('status') == 'inhouse') selected @endif >Inhouse</option>
-                        <option value="dipinjamkan" @if (old('status') == 'dipinjamkan') selected @endif >Di Sewakan</option>
+                        <option value="dipinjamkan" @if (old('status') == 'dipinjamkan') selected @endif >Di Pinjamkan</option>
                         <option value="diservis" @if (old('status') == 'diservis') selected @endif>Di Servis</option>
                         <option value="rusak" @if (old('status') == 'rusak') selected @endif>Rusak</option>
-                        <option value="rental" @if (old('status') == 'rental') selected @endif>Sewa</option>
+                        <option value="rental" @if (old('status') == 'rental') selected @endif>Rental</option>
                         <option value="dikembalikan" @if (old('status') == 'dikembalikan') selected @endif>Di Kembalikan</option>
                       </select>
                   </div>
@@ -586,6 +638,14 @@ DATA MASTER MESIN
          return d;
         }
       },
+      "initComplete" : function(settings, json){
+        const all_checkbox_view = $("#row-tampilan div input[type='checkbox']");
+        $.each(all_checkbox_view, function(key, checkbox){
+          let kolom = $(checkbox).data('kolom');
+          let is_checked = checkbox.checked;
+          table.column(kolom).visible(is_checked);
+        })
+      },
       columnDefs: [ // looping datatables
         { targets: '_all', visible: true },
         {
@@ -651,6 +711,13 @@ DATA MASTER MESIN
           "targets" : 8,
           "sortable" : false,
           "render" : function(data, type, row, meta){
+            return row.photo;
+          }
+        },
+        {
+          "targets" : 9,
+          "sortable" : false,
+          "render" : function(data, type, row, meta){
             return `
             <a data-id=`+row.id+` data-toggle="modal" data-target="#myEdit" class="edit btn btn-sm btn-success" style="padding: 1px 5px"><i class="fa fa-edit"></i></a>
             |  <a data-id=`+row.id+` data-toggle="modal" data-target="#myShow" class="tampil btn btn-sm btn-warning" style="padding: 1px 5px"><i class="fa fa-eye"></i></a> 
@@ -660,6 +727,13 @@ DATA MASTER MESIN
         },
       ]
   });
+
+  $("#row-tampilan div input[type='checkbox']").on('change', function(){
+    let checkbox = $(this);
+    let kolom = $(this).data('kolom');
+    let is_checked = checkbox[0].checked;
+    table.column(kolom).visible(is_checked);
+  })
 
   setTimeout(function() {
     console.log(list_mesin);
@@ -677,7 +751,6 @@ DATA MASTER MESIN
          $("#no_seri").val(mesin.no_seri.toUpperCase());
          $("#vendor_id").val(mesin.vendor_id).trigger('change');
          $("#status").val(mesin.status);
-         console.log(mesin.status);
          $("#barcode_mesin, #barcode_mesin1").val(mesin.barcode_mesin);
          $("#editform").attr("action","mastermesin/"+id);
     });
@@ -687,7 +760,7 @@ DATA MASTER MESIN
       event.preventDefault();
       var id = $(this).data('id');
       const mesin = list_mesin[id];
-      console.log(mesin); 
+      
          $('#tampiljenis').html(mesin.jenis_mesin.toUpperCase());
          $('#tampilmerk').html(mesin.merk_mesin.toUpperCase());
          $('#tampiltype').html(mesin.type.toUpperCase());
