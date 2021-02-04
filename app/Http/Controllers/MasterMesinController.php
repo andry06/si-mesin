@@ -1,11 +1,15 @@
 <?php
 
 namespace App\Http\Controllers;
+
+use Maatwebsite\Excel\Facades\Excel;
 use RealRashid\SweetAlert\Facades\Alert;
+use App\Exports\MasterMesinExport;
 use DB;
 use Illuminate\Http\Request;
 use App\MasterMesin;
 use App\MerkMesin;
+
 
 use Auth;
 
@@ -299,5 +303,10 @@ class MasterMesinController extends Controller
         return view('mastermesin.print', compact('master'));
     }
 
+    public function exportexcel(Request $request)
+    {
+        // dd($request->filterjenismesin_id);
+        return Excel::download(new MasterMesinExport($request->filterjenismesin_id, $request->filtermerkmesin_id, $request->filtervendor_id, $request->filterstatus), 'Master Mesin.xlsx');
+    }
     
 }

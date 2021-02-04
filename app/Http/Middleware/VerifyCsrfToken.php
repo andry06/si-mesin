@@ -19,6 +19,7 @@ class VerifyCsrfToken extends Middleware
      * @var array
      */
     protected $except = [
-        '/mastermesin/data'
+        '/mastermesin/data',
+        '/mastermesin/excel'
     ];
 }

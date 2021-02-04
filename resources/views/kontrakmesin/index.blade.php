@@ -1,7 +1,7 @@
 @extends('adminlte.master')
 
 @section('tittle')
-DATA MASTER MESIN
+DATA KONTRAK
 @endsection
 
 @push('csstambahan')
@@ -20,13 +20,13 @@ DATA MASTER MESIN
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1>Data Mesin</h1>
+            <h1>Data Kontrak</h1>
           </div>
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="#">Home</a></li>
-              <li class="breadcrumb-item"><a href="#">Master</a></li>
-              <li class="breadcrumb-item active">Mesin</li>
+              <li class="breadcrumb-item"><a href="#">Transaction</a></li>
+              <li class="breadcrumb-item active">Kontrak</li>
             </ol>
           </div>
         </div>
@@ -69,7 +69,7 @@ DATA MASTER MESIN
           <div class="col-12">
             <div class="card card-info">
               <div class="card-header">
-                <h3 class="card-title">Daftar Mesin</h3>
+                <h3 class="card-title">Daftar Kontrak</h3>
               </div>
               <br>
               <center>
@@ -191,20 +191,15 @@ DATA MASTER MESIN
             <div class="card-body table-responsive p-3" >  
               <!-- <div class="card-body"> -->
              
-              <form method="post"  id="form-kirim">
-              @csrf
                 <table id="table" width="100%" style="font-size: 0.9rem" class="table table-hover text-nowrap table-striped table-bordered">
                   <thead class="thead-info"> 
                     <tr>
-                      <th width="5px"><input type="checkbox" id="check-all"></th>
-                      <th scope="col" class="text-center">Jenis Mesin</th>
-                      <th scope="col" class="text-center">Merk Mesin</th>
-                      <th scope="col" class="text-center">Type</th>
-                      <th scope="col" class="text-center">No Seri</th>
-                      <th scope="col" class="text-center">Kepemilikan</th>
-                      <th scope="col" class="text-center">Barcode Mesin</th>
+                      <th scope="col" class="text-center">No Kontrak</th>
+                      <th scope="col" class="text-center">Nama Vendor</th>
+                      <th scope="col" class="text-center">Tgl Awal Kontrak</th>
+                      <th scope="col" class="text-center">Tgl Jatuh Tempo</th>
+                      <th scope="col" class="text-center">Keterangan </th>
                       <th scope="col" class="text-center">Status</th>
-                      <th scope="col" class="text-center">Foto</th>
                       <th scope="col" class="text-center">Action</th>
                     </tr>
                   </thead>

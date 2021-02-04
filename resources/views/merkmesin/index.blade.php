@@ -90,7 +90,7 @@ DATA MERK MESIN
                   </tbody>
                 </table>
                 <br>
-                <a href="/merkmesin/excel" class="btn btn-sm btn-success"><i class="fa fa-file" aria-hidden="true"></i> EXPORT EXCEL</a> 
+                <a download href="/merkmesin/excel" class="btn btn-sm btn-success"><i class="fa fa-file" aria-hidden="true"></i> EXPORT EXCEL</a> 
                 | 
                  <a href="/merkmesin/printdata" target="_blank" class="btn btn-sm btn-primary"><i class="fa fa-file" aria-hidden="true"></i> PRINT DATA</a>
                 </div>

@@ -56,7 +56,6 @@ DATA JENIS MESIN
                   Tambah Data
                 </button>
               </center>
-              <!-- <div class="card-body"> -->
                 <table id="example2"  class="table table-hover text-nowrap table-striped table-bordered">
                   <thead class="thead-info"> 
                     <tr>
@@ -78,7 +77,6 @@ DATA JENIS MESIN
                             <td style="width:10px; padding-top:6px; padding-bottom: 0px;" >
                                  <a data-id="{{ $jm->id }}" data-toggle="modal" data-target="#myEdit" class="edit btn btn-sm btn-success"><i class="fa fa-edit"></i></a>
                               |  <a href="/jenismesin/hapus/{{ $jm->id }}" class="tombol-hapus btn btn-sm btn-danger"><i class="fa fa-trash"></i></a> 
-                              <!-- </center> -->
                             </td>
                         </tr>
                     @empty
