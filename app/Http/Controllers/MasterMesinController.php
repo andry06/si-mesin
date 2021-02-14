@@ -6,9 +6,10 @@ use Maatwebsite\Excel\Facades\Excel;
 use RealRashid\SweetAlert\Facades\Alert;
 use App\Exports\MasterMesinExport;
 use DB;
-use Illuminate\Http\Request;
+use Illuminate\Http\Request; 
 use App\MasterMesin;
 use App\MerkMesin;
+use App\Perusahaan;
 
 
 use Auth;
@@ -28,13 +29,12 @@ class MasterMesinController extends Controller
     public function index()
     {
         $user = Auth::user();
-        $master = MasterMesin::All();
         $jenismesin = DB::table('jenis_mesin')->select('id', 'jenis_mesin as jenismesin')->get();
         $merkmesin = DB::table('merk_mesin')->select('*')->get();
         
         $vendors = DB::select("select * from vendors order BY (nama_vendor = 'pt. fgx indonesia') DESC, nama_vendor");
         
-        return view('mastermesin.index', compact('master', 'jenismesin', 'merkmesin', 'vendors'));
+        return view('mastermesin.index', compact('jenismesin', 'merkmesin', 'vendors'));
     }
 
     public function data(Request $request)
@@ -70,6 +70,7 @@ class MasterMesinController extends Controller
             ->join('merk_mesin', 'merk_mesin.id', '=', 'master_mesin.merkmesin_id')
             ->join('vendors', 'vendors.id', '=', 'master_mesin.vendor_id')
         ;
+            
 
         if($request->input('search.value')!=null){
             $data = $data->where(function($q)use($request){
@@ -192,18 +193,18 @@ class MasterMesinController extends Controller
      */
     public function edit($id)
     {
-        $master = DB::select("SELECT A.*, B.kode_number, B.jenis_mesin, C.merk_mesin, D.vendor_number, D.nama_vendor
-                 from master_mesin A join jenis_mesin B on A.jenismesin_id = B.id
-                join merk_mesin C on A.merkmesin_id = C.id join vendors D on A.vendor_id = D.id 
-                WHERE A.id = :id", ['id' => $id]);
-        $barcode = (string)$master[0]->barcode_mesin;
-        $src = "data:image/png;base64,{{DNS1D::getBarcodePNG('$barcode', 'C128A')}}";
+        // $master = DB::select("SELECT A.*, B.kode_number, B.jenis_mesin, C.merk_mesin, D.vendor_number, D.nama_vendor
+        //          from master_mesin A join jenis_mesin B on A.jenismesin_id = B.id
+        //         join merk_mesin C on A.merkmesin_id = C.id join vendors D on A.vendor_id = D.id 
+        //         WHERE A.id = :id", ['id' => $id]);
+        // $barcode = (string)$master[0]->barcode_mesin;
+        // $src = "data:image/png;base64,{{DNS1D::getBarcodePNG('$barcode', 'C128A')}}";
         
 
-	    return response()->json([
-          'data' => $master[0],
+	    // return response()->json([
+        //   'data' => $master[0],
     
-        ]);
+        // ]);
     }
 
     /**
@@ -269,8 +270,8 @@ class MasterMesinController extends Controller
     public function hapus($id)
     {
         // menghapus data pegawai berdasarkan id yang dipilih
-        $user = MasterMesin::destroy($id);
-        Alert::success('Berhasil', 'Berhasil Menghapus User');
+        $mesin = MasterMesin::destroy($id);
+        Alert::success('Berhasil', 'Berhasil Menghapus Data Mesin');
         return redirect('/mastermesin');
     }
 
@@ -309,4 +310,28 @@ class MasterMesinController extends Controller
         return Excel::download(new MasterMesinExport($request->filterjenismesin_id, $request->filtermerkmesin_id, $request->filtervendor_id, $request->filterstatus), 'Master Mesin.xlsx');
     }
     
+    public function printdata(Request $request)
+    {
+        $perusahaan = Perusahaan::find(1)->get();
+
+        $data = MasterMesin::all();
+
+        if($request->filterjenismesin_id!=null){
+            $data = $data->where('jenismesin_id', $request->filterjenismesin_id);
+        }
+
+        if($request->filtermerkmesin_id!=null){
+            $data = $data->where('merkmesin_id', $request->filtermerkmesin_id);
+        }
+
+        if($request->filtervendor_id!=null){
+            $data = $data->where('vendor_id', $request->filtervendor_id);
+        }
+
+        if($request->filterstatus!=null){
+            $data = $data->where('status', $request->filterstatus);
+        }
+
+        return view('mastermesin.printdata', compact('data', 'perusahaan'));
+    }
 }

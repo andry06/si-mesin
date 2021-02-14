@@ -21,8 +21,10 @@ class CreateKontrakMesinTable extends Migration
             $table->date('tgl_jatuh_tempo')->nullable();
             $table->string('keterangan', 50)->nullable();
             $table->string('status',50)->nullable();
-            $table->foreign('vendor_id')->references('id')->on('vendor')->onDelete('restrict')->onUpdate('cascade');
+            $table->unsignedBigInteger('createduser_id');
             $table->timestamps();
+            $table->foreign('vendor_id')->references('id')->on('vendor')->onDelete('restrict')->onUpdate('cascade');
+            $table->foreign('createduser_id')->references('id')->on('users')->onDelete('restrict')->onUpdate('cascade');
         });
     }
 

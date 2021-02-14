@@ -215,8 +215,7 @@ DATA MASTER MESIN
 
                 <table>
                   <tr>
-                    <td><a href="/users/printdata" target="_blank" class="btn btn-sm btn-primary"><i class="fa fa-file" aria-hidden="true"></i> PRINT DATA</a></td>
-                    <td> | </td>
+                    
                     <td><button type="submit" class="btn btn-sm btn-warning" id="btn-kirim" disabled><i class="fa fa-print"></i> PRINT BARCODE</button>
                         </form>
                     </td>
@@ -228,18 +227,19 @@ DATA MASTER MESIN
                         <input type="hidden" name="filtermerkmesin_id" id="hasilmerkmesin_id">
                         <input type="hidden" name="filtervendor_id" id="hasilvendor_id">
                         <input type="hidden" name="filterstatus" id="hasilstatus">
-                        <button id="btn-excel" type="submit" class="btn btn-sm btn-success"><i class="fa fa-file" aria-hidden="true"></i> EXPORT EXCEL</button> 
-                    </form>
+                        <button id="btn-print" type="submit" class="btn btn-sm btn-info"><i class="fa fa-print" aria-hidden="true"></i> PRINT DATA</button> 
                     </td>
+                    <td> | </td>
+                    <td>
+                        <button id="btn-excel" type="submit" class="btn btn-sm btn-success"><i class="fa fa-file" aria-hidden="true"></i> EXPORT EXCEL</button> 
+                    </td>
+                    </form>
                   </tr>
                 </table> 
               </div>
               <!-- /.card-body -->
-            </div>
-             
+            </div>     
             <!-- /.card -->
-
-
 
 <!-- Modal Edit Data data -->
 <div id="myEdit" class="modal fade" tabindex="-1" role="dialog">
@@ -372,7 +372,7 @@ DATA MASTER MESIN
 </div>
 <!-- Modal Edit data -->
 
-<!-- Modal Edit Data data -->
+<!-- Modal tambah Data  -->
 <div id="modal-tambah" class="modal fade" tabindex="-1" role="dialog">
 <div class="modal-dialog">
           <div class="modal-content">
@@ -506,7 +506,7 @@ DATA MASTER MESIN
     </div>
 </div>
 </div>
-<!-- Modal Edit data -->
+<!-- Modal tambah data -->
 
 
 <!-- Modal Show Data data-->
@@ -814,13 +814,19 @@ DATA MASTER MESIN
               $('#form-kirim').submit();
           });
 
+          $('body').on('click', '#btn-print', function (event) {
+              event.preventDefault();
+              $("#form-excel").attr("action","/mastermesin/printdata");
+              $("#form-excel").attr("target","_blank");
+              $('#form-excel').submit();
+          });
+
           $('body').on('click', '#btn-excel', function (event) {
               event.preventDefault();
               $("#form-excel").attr("action","/mastermesin/excel");
               $("#form-excel").attr("target","_blank");
               $('#form-excel').submit();
           });
-
           
   $("#check-all").on('click', function(){
     var isChecked = $("#check-all").prop('checked');

@@ -48,6 +48,7 @@ Route::get('/', function () {
 
 // Route::resource('perusahaan', 'PerusahaanController')->middleware('auth');
 Route::any('/mastermesin/data', 'MasterMesinController@data');
+Route::post('/mastermesin/printdata', 'MasterMesinController@printdata');
 Route::post('/mastermesin/print', 'MasterMesinController@print');
 Route::post('/mastermesin/excel', 'MasterMesinController@exportexcel');
 Route::get('/mastermesin/{idvendor}/{idjm}/barcode', 'MasterMesinController@barcode');
@@ -73,7 +74,11 @@ Route::get('/vendors/hapus/{id}','VendorController@hapus');
 Route::get('/vendors/excel', 'VendorController@exportexcel');
 Route::get('/vendors/number', 'VendorController@number');
 Route::resource('vendors', 'VendorController');
-
+Route::post('/kontrakmesin/excel', 'KontrakMesinController@exportexcel');
+Route::post('/kontrakmesin/printdata', 'KontrakMesinController@printdata');
+Route::get('/kontrakmesin/hapus/{id}','KontrakMesinController@hapus');
+Route::any('/kontrakmesin/data', 'KontrakMesinController@data');
+Route::resource('kontrakmesin', 'KontrakMesinController');
 
 Route::resource('users', 'UserController');
 
